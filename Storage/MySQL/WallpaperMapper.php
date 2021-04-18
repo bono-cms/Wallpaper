@@ -25,6 +25,14 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getTranslationTable()
+    {
+        return WallpaperTranslationMapper::getTableName();
+    }
+
+    /**
      * Returns a set of shared columns to be used in SELECT query
      * 
      * @return array
