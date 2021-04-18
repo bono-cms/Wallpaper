@@ -44,4 +44,31 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
             WallpaperTranslationMapper::column('meta_description')
         ];
     }
+
+    /**
+     * Fetch a wallpaper by its id
+     * 
+     * @param string $id Page id
+     * @param boolean $withTranslations Whether to fetch translations
+     * @return array
+     */
+    public function fetchById($id, $withTranslations)
+    {
+        return $this->findWebPage($this->getColumns(), $id, $withTranslations);
+    }
+
+    /**
+     * Fetch all wallpapers
+     * 
+     * @return array
+     */
+    public function fetchAll()
+    {
+        $db = $this->createWebPageSelect($this->getColumns())
+                   ->whereEquals(WallpaperTranslationMapper::column('lang_id'), $this->getLangId())
+                   ->orderBy(self::column('id'))
+                   ->desc();
+
+        return $db->queryAll();
+    }
 }

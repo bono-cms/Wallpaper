@@ -13,5 +13,19 @@ namespace Wallpaper\Storage;
 
 interface WallpaperMapperInterface
 {
-    
+    /**
+     * Fetch a wallpaper by its id
+     * 
+     * @param string $id Page id
+     * @param boolean $withTranslations Whether to fetch translations
+     * @return array
+     */
+    public function fetchById($id, $withTranslations);
+
+    /**
+     * Fetch all wallpapers
+     * 
+     * @return array
+     */
+    public function fetchAll();
 }
