@@ -74,6 +74,17 @@ final class WallpaperService extends AbstractManager
     }
 
     /**
+     * Returns a collection of switching URLs
+     * 
+     * @param string $id Page ID
+     * @return array
+     */
+    public function getSwitchUrls($id)
+    {
+        return $this->pageMapper->createSwitchUrls($id, self::MODULE, self::CONTROLLER);
+    }
+
+    /**
      * Returns last wallpaper id
      * 
      * @return string
