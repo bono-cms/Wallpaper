@@ -18,6 +18,6 @@ return [
     ],
 
     '/%s/module/wallpaper/delete/(:var)' => [
-        'controller' => 'Admin:Wallpaper@addAction'
+        'controller' => 'Admin:Wallpaper@deleteAction'
     ]
 ];
