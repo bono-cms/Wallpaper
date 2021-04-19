@@ -66,7 +66,8 @@ final class WallpaperService extends AbstractManager
                ->setTitle($row['title'])
                ->setMetaDescription($row['meta_description'])
                ->setKeywords($row['keywords'])
-               ->setUrl($row['slug'])
+               ->setSlug($row['slug'])
+               ->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
                ->setChangefreq($row['changefreq'])
                ->setPriority($row['priority']);
 
