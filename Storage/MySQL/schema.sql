@@ -16,7 +16,7 @@ CREATE TABLE `bono_module_wallpaper_translations` (
     `keywords` TEXT NOT NULL,
     `meta_description` TEXT NOT NULL COMMENT 'Meta-description for search engines',
 
-    FOREIGN KEY (id) REFERENCES bono_module_pages(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES bono_module_wallpaper(id) ON DELETE CASCADE,
     FOREIGN KEY (lang_id) REFERENCES bono_module_cms_languages(id) ON DELETE CASCADE,
     FOREIGN KEY (web_page_id) REFERENCES bono_module_cms_webpages(id) ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;

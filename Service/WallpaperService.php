@@ -81,7 +81,7 @@ final class WallpaperService extends AbstractManager
      */
     public function getSwitchUrls($id)
     {
-        return $this->pageMapper->createSwitchUrls($id, self::MODULE, self::CONTROLLER);
+        return $this->wallpaperMapper->createSwitchUrls($id, self::MODULE, self::CONTROLLER);
     }
 
     /**
@@ -139,6 +139,6 @@ final class WallpaperService extends AbstractManager
      */
     public function save(array $input)
     {
-        return $this->pageMapper->savePage(self::MODULE, self::CONTROLLER, $input['page'], $input['translation']);
+        return $this->wallpaperMapper->savePage(self::MODULE, self::CONTROLLER, $input['wallpaper'], $input['translation']);
     }
 }
