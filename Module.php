@@ -22,7 +22,7 @@ final class Module extends AbstractCmsModule
     public function getServiceProviders()
     {
         return [
-            'wallpaperService' => new WallpaperService($this->getMapper('\Wallpaper\Storage\MySQL\WallpaperMapper'))
+            'wallpaperService' => new WallpaperService($this->getMapper('\Wallpaper\Storage\MySQL\WallpaperMapper'), $this->getWebPageManager())
         ];
     }
 }

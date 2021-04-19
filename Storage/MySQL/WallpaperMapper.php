@@ -11,6 +11,7 @@
 
 namespace Wallpaper\Storage\MySQL;
 
+use Cms\Storage\MySQL\WebPageMapper;
 use Cms\Storage\MySQL\AbstractMapper;
 use Wallpaper\Storage\WallpaperMapperInterface;
 
@@ -42,6 +43,7 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
         return [
             self::column('id'),
             self::column('sku'),
+
             // Translations
             WallpaperTranslationMapper::column('lang_id'),
             WallpaperTranslationMapper::column('web_page_id'),
@@ -49,7 +51,12 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
             WallpaperTranslationMapper::column('name'),
             WallpaperTranslationMapper::column('description'),
             WallpaperTranslationMapper::column('keywords'),
-            WallpaperTranslationMapper::column('meta_description')
+            WallpaperTranslationMapper::column('meta_description'),
+
+            // Web page meta columns
+            WebPageMapper::column('slug'),
+            WebPageMapper::column('changefreq'),
+            WebPageMapper::column('priority')
         ];
     }
 

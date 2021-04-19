@@ -11,6 +11,7 @@
 
 namespace Wallpaper\Service;
 
+use Cms\Service\WebPageManagerInterface;
 use Cms\Service\AbstractManager;
 use Krystal\Stdlib\VirtualEntity;
 use Wallpaper\Storage\WallpaperMapperInterface;
@@ -25,14 +26,23 @@ final class WallpaperService extends AbstractManager
     private $wallpaperMapper;
 
     /**
+     * Web page manager is responsible for managing slugs
+     * 
+     * @var \Cms\Service\WebPageManagerInterface
+     */
+    private $webPageManager;
+
+    /**
      * State initialization
      * 
      * @param \Wallpaper\Storage\WallpaperMapperInterface $wallpaperMapper
+     * @param \Cms\Service\WebPageManagerInterface $webPageManager
      * @return void
      */
-    public function __construct(WallpaperMapperInterface $wallpaperMapper)
+    public function __construct(WallpaperMapperInterface $wallpaperMapper, WebPageManagerInterface $webPageManager)
     {
         $this->wallpaperMapper = $wallpaperMapper;
+        $this->webPageManager = $webPageManager;
     }
 
     /**
@@ -48,7 +58,10 @@ final class WallpaperService extends AbstractManager
                ->setDescription($row['description'])
                ->setTitle($row['title'])
                ->setMetaDescription($row['meta_description'])
-               ->setKeywords($row['keywords']);
+               ->setKeywords($row['keywords'])
+               ->setUrl($row['slug'])
+               ->setChangefreq($row['changefreq'])
+               ->setPriority($row['priority']);
 
         return $entity;
     }
