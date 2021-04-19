@@ -19,6 +19,12 @@ use Wallpaper\Storage\WallpaperMapperInterface;
 final class WallpaperService extends AbstractManager
 {
     /**
+     * Constants for router
+     */
+    const CONTROLLER = 'Wallpaper:Wallpaper@indexAction';
+    const MODULE = 'Wallpaper';
+
+    /**
      * Any compliant wallpaper mapper
      * 
      * @var \Wallpaper\Storage\WallpaperMapperInterface
@@ -117,11 +123,11 @@ final class WallpaperService extends AbstractManager
     /**
      * Saves a wallpaper
      * 
-     * @param array $input
+     * @param array $input Raw input data
      * @return boolean
      */
     public function save(array $input)
     {
-        return $this->wallpaperMapper->savePage();
+        return $this->pageMapper->savePage(self::MODULE, self::CONTROLLER, $input['page'], $input['translation']);
     }
 }
