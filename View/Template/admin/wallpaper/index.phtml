@@ -1,0 +1,86 @@
+<?php
+
+use Krystal\Form\Element;
+use Krystal\Widget\GridView\GridViewWidget;
+use Cms\View\Icon;
+
+?>
+
+<form autocomplete="off">
+    <div class="btn-toolbar">
+        <div class="btn-group mr-2">
+            <?php $this->loadPartial('menu', [
+                'items' => [
+                    'Wallpaper:Admin:Wallpaper@addAction' => 'Add new collection',
+                ],
+
+                'actions' => [
+                    'data' => $wallpapers,
+                    'delete' => 'Wallpaper:Admin:Wallpaper@deleteAction'
+                ]
+            ]); ?>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <?php $this->loadPartial('items-per-page', ['caption' => 'Wallpapers']); ?>
+        </div>
+
+
+        <div class="table-responsive">
+            <?= $this->widget(new GridViewWidget($wallpapers, [
+                'pk' => 'id',
+                'batch' => true,
+                'tableClass' => 'table table-hover table-bordered table-striped table-sm',
+                'columns' => [
+                    [
+                        'column' => 'id',
+                        'label' => '#',
+                        'attributes' => [
+                            'class' => 'text-center text-muted'
+                        ]
+                    ],
+
+                    [
+                        'column' => 'name',
+                        'type' => 'text',
+                        'attributes' => [
+                            'class' => null
+                        ]
+                    ],
+                ],
+
+                'actions' => [
+                    'view' => function($wallpaper){
+                        return Icon::view($wallpaper->getUrl(), $this->translate('View this page on site'));
+                    },
+
+                    'edit' => function($wallpaper){
+                        return Icon::edit(
+                            $this->url('Wallpaper:Admin:Wallpaper@editAction', $wallpaper->getId()),
+                            $this->translate('Edit this wallpaper')
+                        );
+                    },
+
+                    'remove' => function($wallpaper){
+                        return Icon::remove(
+                            $this->url('Wallpaper:Admin:Wallpaper@deleteAction', $wallpaper->getId()), 
+                            $this->translate('Remove this wallpaper')
+                        );
+                    }
+                ]
+            ])); ?>
+
+            <br />
+
+            <?php if (empty($wallpaper)): ?>
+            <div class="center-block">
+                <h2 class="text-center text-muted"> <?php $this->show('No wallpapers'); ?></h2>
+            </div>
+            <?php endif; ?>
+        </div>
+
+        <?php $this->loadPartial('paginator'); ?>
+    </div>
+</form>

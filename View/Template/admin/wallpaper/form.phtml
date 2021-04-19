@@ -1,0 +1,81 @@
+<?php
+
+use Krystal\Form\Element;
+use Krystal\Widget\GridView\GridViewWidget;
+use Cms\Service\LanguageManager;
+use Cms\View\Icon;
+
+?>
+
+<form class="card" data-group="room" autocomplete="off">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="nav-item active"><a class="nav-link" href="#hotel-room-active" role="tab" data-toggle="tab"><i class="fas fa-hotel"></i> <?php $this->show('Wallpaper'); ?></a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#hotel-room-configuration" role="tab" data-toggle="tab"><i class="fas fa-dice"></i> <?php $this->show('Configuration'); ?></a></li>
+	</ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="hotel-room-active" role="tabpanel">
+            <?php $this->loadPartial('language-tabs'); ?>
+
+            <div class="tab-content">
+                <?php foreach ($languages as $index => $language): ?>
+                <div class="tab-pane fade in <?= $index == 0 ? 'active show' : null; ?>" id="<?php printf('language-%s', $language->getId()); ?>" role="tabpanel">
+                    <?php $entity = LanguageManager::findByLangId($language->getId(), $wallpaper); ?>
+                    <?php $this->loadPartial('language-name', ['language' => $language]); ?>
+
+                    <?= $this->field()->hidden(sprintf('translation[%s][id]', $language->getId()), $entity->getId()); ?>
+                    <?= $this->field()->hidden(sprintf('translation[%s][lang_id]', $language->getId()), $language->getId()); ?>
+                    <?= $this->field()->hidden(sprintf('translation[%s][web_page_id]', $language->getId()), $entity->getWebPageId()); ?>
+                    <?= $this->field('Name')->text(sprintf('translation[%s][name]', $language->getId()), $entity->getName(), ['class' => 'form-control']); ?>
+                    <?= $this->field('Description')->textarea(sprintf('translation[%s][description]', $language->getId()), $entity->getDescription(), ['class' => 'form-control']); ?>
+
+                    <div class="options">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
+                            <div class="col-lg-10">
+                                <div class="input-group">
+                                    <?= Element::text(sprintf('translation[%s][slug]', $language->getId()), $entity->getSlug(), array('class' => 'form-control', 'placeholder' => $this->translate('URL slug for this room. By default is taken from the name'))); ?>
+
+                                    <span class="input-group-addon">
+                                        <a href="#" data-slug-selector="<?= LanguageManager::generateSelector($language->getId()); ?>"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh'); ?>"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?= $this->field('Change frequency')->select(sprintf('translation[%s][changefreq]', $language->getId()), $this->translateArray($changeFreqs), $entity->getChangeFreq(), ['class' => 'form-control']); ?>
+                        <?= $this->field('Priority')->select(sprintf('translation[%s][priority]', $language->getId()), $priorities, $entity->getPriority(), ['class' => 'form-control']); ?>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
+                            <div class="col-lg-10">
+                                <div class="input-group">
+                                    <?= Element::text(sprintf('translation[%s][title]', $language->getId()), $entity->getTitle(), array('class' => 'form-control', 'data-input' => 'title', 'placeholder' => $this->translate('Room title'))); ?>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?= $this->field('Keywords')->text(sprintf('translation[%s][keywords]', $language->getId()), $entity->getKeywords(), ['class' => 'form-control', 'placeholder' => $this->translate('Keywords used for search engines')]); ?>
+                        <?= $this->field('Description')->textarea(sprintf('translation[%s][meta_description]', $language->getId()), $entity->getMetaDescription(), ['class' => 'form-control', 'placeholder' => $this->translate('Meta description for search engines')]); ?>
+                    </div>                    
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="hotel-room-configuration" role="tabpanel">
+            <?= $this->field()->hidden('wallpaper[id]', $entity->getId()); ?>
+            <?= $this->field('SKU')->number('wallpaper[sku]', $entity->getSku(), ['class' => 'form-control']); ?>
+        </div>
+    </div>
+
+    <?php $this->loadPartial('actions', [
+        'new' => !$entity->getId(),
+        'add' => 'Wallpaper:Admin:Wallpaper@addAction',
+        'edit' => 'Wallpaper:Admin:Wallpaper@editAction',
+        'save' => 'Wallpaper:Admin:Wallpaper@saveAction',
+        'cancel' => 'Wallpaper:Admin:Wallpaper@indexAction',
+        'options' => true
+    ]); ?>
+</form>
