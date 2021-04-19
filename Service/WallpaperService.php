@@ -21,7 +21,7 @@ final class WallpaperService extends AbstractManager
     /**
      * Constants for router
      */
-    const CONTROLLER = 'Wallpaper:Wallpaper@indexAction';
+    const CONTROLLER = 'Wallpaper:Wallpaper@viewAction';
     const MODULE = 'Wallpaper';
 
     /**
