@@ -54,6 +54,7 @@ final class WallpaperService extends AbstractManager
         $entity->setId($row['id'])
                ->setLangId($row['lang_id'])
                ->setWebPageId($row['web_page_id'])
+               ->setSku($row['sku'])
                ->setName($row['name'])
                ->setDescription($row['description'])
                ->setTitle($row['title'])
