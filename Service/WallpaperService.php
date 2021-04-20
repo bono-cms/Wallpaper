@@ -14,6 +14,7 @@ namespace Wallpaper\Service;
 use Cms\Service\WebPageManagerInterface;
 use Cms\Service\AbstractManager;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Wallpaper\Storage\WallpaperMapperInterface;
 
 final class WallpaperService extends AbstractManager
@@ -120,6 +121,17 @@ final class WallpaperService extends AbstractManager
         } else {
             return $this->prepareResult($this->wallpaperMapper->fetchById($id, false));
         }
+    }
+
+    /**
+     * Fetches a list
+     * 
+     * @param int $id
+     * @return array
+     */
+    public function fetchList($id)
+    {
+        return ArrayUtils::arrayList($this->wallpaperMapper->fetchList($id), 'id', 'sku');
     }
 
     /**
