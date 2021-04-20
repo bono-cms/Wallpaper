@@ -175,6 +175,15 @@ final class WallpaperService extends AbstractManager
      */
     public function save(array $input)
     {
-        return $this->wallpaperMapper->savePage(self::MODULE, self::CONTROLLER, $input['wallpaper'], $input['translation']);
+        // Do save first
+        $this->wallpaperMapper->savePage(self::MODULE, self::CONTROLLER, $input['wallpaper'], $input['translation']);
+
+        if ($input['wallpaper']['id']) {
+            $id = $input['wallpaper']['id'];
+        } else {
+            $id = $this->getLastId();
+        }
+
+        return $this->wallpaperMapper->saveCompanions($id, $input['companions']);
     }
 }
