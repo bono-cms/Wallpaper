@@ -23,7 +23,8 @@ final class Dropper extends AbstractStorageDropper
         return [
             WallpaperMapper::getTableName(),
             WallpaperTranslationMapper::getTableName(),
-            WallpaperCompanionMapper::getTableName()
+            WallpaperCompanionMapper::getTableName(),
+            WallpaperInteriorMapper::getTableName()
         ];
     }
 }
