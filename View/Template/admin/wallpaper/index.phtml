@@ -52,18 +52,18 @@ use Cms\View\Icon;
                 ],
 
                 'actions' => [
-                    'view' => function($wallpaper){
+                    function($wallpaper){
                         return Icon::view($wallpaper->getUrl(), $this->translate('View this page on site'));
                     },
 
-                    'edit' => function($wallpaper){
+                    function($wallpaper){
                         return Icon::edit(
                             $this->url('Wallpaper:Admin:Wallpaper@editAction', $wallpaper->getId()),
                             $this->translate('Edit this wallpaper')
                         );
                     },
 
-                    'remove' => function($wallpaper){
+                    function($wallpaper){
                         return Icon::remove(
                             $this->url('Wallpaper:Admin:Wallpaper@deleteAction', $wallpaper->getId()), 
                             $this->translate('Remove this wallpaper')
@@ -74,7 +74,7 @@ use Cms\View\Icon;
 
             <br />
 
-            <?php if (empty($wallpaper)): ?>
+            <?php if (empty($wallpapers)): ?>
             <div class="center-block">
                 <h2 class="text-center text-muted"> <?php $this->show('No wallpapers'); ?></h2>
             </div>
