@@ -1,3 +1,4 @@
+
 /* Main wallpapers */
 DROP TABLE IF EXISTS `bono_module_wallpaper`;
 CREATE TABLE `bono_module_wallpaper` (
@@ -19,4 +20,14 @@ CREATE TABLE `bono_module_wallpaper_translations` (
     FOREIGN KEY (id) REFERENCES bono_module_wallpaper(id) ON DELETE CASCADE,
     FOREIGN KEY (lang_id) REFERENCES bono_module_cms_languages(id) ON DELETE CASCADE,
     FOREIGN KEY (web_page_id) REFERENCES bono_module_cms_webpages(id) ON DELETE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+
+/* Companions */
+DROP TABLE IF EXISTS `bono_module_wallpaper_companions`;
+CREATE TABLE `bono_module_wallpaper_companions` (
+    `master_id` INT NOT NULL COMMENT 'Main wallpaper',
+    `slave_id` INT NOT NULL COMMENT 'Attached wallpaper',
+
+    FOREIGN KEY (master_id) REFERENCES bono_module_wallpaper(id) ON DELETE CASCADE,
+    FOREIGN KEY (slave_id) REFERENCES bono_module_wallpaper(id) ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
