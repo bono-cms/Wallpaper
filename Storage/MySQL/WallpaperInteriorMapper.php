@@ -23,4 +23,21 @@ final class WallpaperInteriorMapper extends AbstractMapper implements WallpaperI
     {
         return self::getWithPrefix('bono_module_wallpaper_interior');
     }
+
+    /**
+     * Fetch all interiors
+     * 
+     * @param int $wallpaperId
+     * @return array
+     */
+    public function fetchAll($wallpaperId)
+    {
+        $db = $this->db->select('*')
+                       ->from(self::getTableName())
+                       ->whereEquals('wallpaper_id', $wallpaperId)
+                       ->orderBy('id')
+                       ->desc();
+
+        return $db->queryAll();
+    }
 }
