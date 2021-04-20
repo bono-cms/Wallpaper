@@ -1,0 +1,14 @@
+<form class="card" data-group="booking" autocomplete="off">
+    <?= $this->field()->hidden('interior[id]', $interior->getId()); ?>
+    <?= $this->field()->hidden('interior[wallpaper_id]', $interior->getWallpaperId()); ?>
+    <?= $this->field('Order')->text('interior[order]', $interior->getOrder(), ['class' => 'form-control']); ?>
+    <?= $this->field('Filename')->text('interior[filename]', $interior->getFilename(), ['class' => 'form-control']); ?>
+
+    <?php $this->loadPartial('actions', [
+        'new' => !$interior->getId(),
+        'add' => ['Wallpaper:Admin:Interior@addAction', $interior->getWallpaperId()],
+        'edit' => 'Wallpaper:Admin:Interior@editAction',
+        'save' => 'Wallpaper:Admin:Interior@saveAction',
+        'cancel' => ['Wallpaper:Admin:Wallpaper@editAction', $interior->getWallpaperId()]
+    ]); ?>
+</form>
