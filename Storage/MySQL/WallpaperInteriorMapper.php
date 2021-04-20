@@ -32,8 +32,27 @@ final class WallpaperInteriorMapper extends AbstractMapper implements WallpaperI
      */
     public function fetchAll($wallpaperId)
     {
-        $db = $this->db->select('*')
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            self::column('wallpaper_id'),
+            self::column('order'),
+            self::column('filename'),
+            WallpaperMapper::column('sku'),
+            WallpaperTranslationMapper::column('name') => 'wallpaper'
+        ];
+
+        $db = $this->db->select($columns)
                        ->from(self::getTableName())
+                       // Wallpaper relation
+                       ->leftJoin(WallpaperMapper::getTableName(), [
+                            WallpaperMapper::column('id') => self::getRawColumn('wallpaper_id')
+                       ])
+                       // Wallpaper relation
+                       ->leftJoin(WallpaperTranslationMapper::getTableName(), [
+                            WallpaperTranslationMapper::column('id') => WallpaperMapper::getRawColumn('id'),
+                            WallpaperTranslationMapper::column('lang_id') => $this->getLangId()
+                       ])
                        ->whereEquals('wallpaper_id', $wallpaperId)
                        ->orderBy('id')
                        ->desc();
