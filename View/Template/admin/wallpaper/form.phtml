@@ -11,6 +11,9 @@ use Cms\View\Icon;
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="nav-item active"><a class="nav-link" href="#hotel-room-active" role="tab" data-toggle="tab"><i class="fas fa-hotel"></i> <?php $this->show('Wallpaper'); ?></a></li>
         <li role="presentation" class="nav-item"><a class="nav-link" href="#hotel-room-configuration" role="tab" data-toggle="tab"><i class="fas fa-dice"></i> <?php $this->show('Configuration'); ?></a></li>
+        <?php if (!$isNew): ?>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#wall-interior" role="tab" data-toggle="tab"><i class="fas fa-link"></i> <?php $this->show('Interior'); ?></a></li>
+        <?php endif; ?>
 	</ul>
 
     <div class="tab-content">
@@ -69,6 +72,51 @@ use Cms\View\Icon;
             <?= $this->field('SKU')->number('wallpaper[sku]', $entity->getSku(), ['class' => 'form-control']); ?>
             <?= $this->field('Companions')->select('companions[]', $companions, $companionIds, ['class' => 'form-control', 'multiple' => true]); ?>
         </div>
+
+        <?php if (!$isNew): ?>
+        <div class="tab-pane fade" id="wall-interior" role="tabpanel">
+            <p><a class="btn btn-primary" href="<?= $this->url('Wallpaper:Admin:Interior@addAction', [$id]); ?>"><?= $this->translate('Upload new interior'); ?></a></p>
+
+            <div class="table-responsive">
+                <?= $this->widget(new GridViewWidget($interiors, [
+                    'tableClass' => 'table table-hover table-bordered',
+                    'columns' => [
+                        [
+                            'column' => 'id',
+                            'label' => '#',
+                            'attributes' => [
+                                'class' => 'text-center text-muted'
+                            ]
+                        ],
+
+                        [
+                            'column' => 'filename',
+                            'type' => 'text',
+                            'attributes' => [
+                                'class' => null
+                            ]
+                        ],
+                    ],
+
+                    'actions' => [
+                        function($interior){
+                            return Icon::edit(
+                                $this->url('Wallpaper:Admin:Interior@editAction', $interior->getId()),
+                                $this->translate('Edit this interior')
+                            );
+                        },
+
+                        function($interior){
+                            return Icon::remove(
+                                $this->url('Wallpaper:Admin:Interior@deleteAction', $interior->getId()), 
+                                $this->translate('Remove this interior')
+                            );
+                        }
+                    ]
+                ])); ?>
+            </div>            
+        </div>
+        <?php endif; ?>
     </div>
 
     <?php $this->loadPartial('actions', [

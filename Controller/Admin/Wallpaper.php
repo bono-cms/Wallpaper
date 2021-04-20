@@ -52,7 +52,9 @@ final class Wallpaper extends AbstractController
             'wallpaper' => $wallpaper,
             'companions' => $wallpaperService->fetchList($id),
             'companionIds' => $isNew ? [] : $wallpaperService->fetchCompanionIds($id),
-            'isNew' => $isNew
+            'interiors' => $isNew ? [] : $this->getModuleService('interiorService')->fetchAll($id),
+            'isNew' => $isNew,
+            'id' => $id
         ]);
     }
 
