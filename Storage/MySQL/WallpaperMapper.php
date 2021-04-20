@@ -73,6 +73,29 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     }
 
     /**
+     * Fetches a list
+     * 
+     * @param int $id Id to be excluded
+     * @return array
+     */
+    public function fetchList($id)
+    {
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            self::column('sku')
+        ];
+
+        $db = $this->createWebPageSelect($columns)
+                   ->whereEquals(WallpaperTranslationMapper::column('lang_id'), $this->getLangId())
+                   ->andWhereNotEquals(self::column('id'), $id)
+                   ->orderBy(self::column('id'))
+                   ->desc();
+
+        return $db->queryAll();
+    }
+
+    /**
      * Fetch all wallpapers
      * 
      * @return array

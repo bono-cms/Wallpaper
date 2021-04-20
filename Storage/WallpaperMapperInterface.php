@@ -23,6 +23,14 @@ interface WallpaperMapperInterface
     public function fetchById($id, $withTranslations);
 
     /**
+     * Fetches a list
+     * 
+     * @param int $id Id to be excluded
+     * @return array
+     */
+    public function fetchList($id);
+
+    /**
      * Fetch all wallpapers
      * 
      * @return array
