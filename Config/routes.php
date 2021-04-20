@@ -1,6 +1,7 @@
 <?php
 
 return [
+    // Wallpaper
     '/%s/module/wallpaper' => [
         'controller' => 'Admin:Wallpaper@indexAction'
     ],
@@ -19,5 +20,22 @@ return [
 
     '/%s/module/wallpaper/delete/(:var)' => [
         'controller' => 'Admin:Wallpaper@deleteAction'
+    ],
+
+    // Interior
+    '/%s/module/wallpaper/interior/add/(:var)' => [
+        'controller' => 'Admin:Interior@addAction'
+    ],
+
+    '/%s/module/wallpaper/interior/edit/(:var)' => [
+        'controller' => 'Admin:Interior@editAction'
+    ],
+
+    '/%s/module/wallpaper/interior/delete/(:var)' => [
+        'controller' => 'Admin:Interior@deleteAction'
+    ],
+
+    '/%s/module/wallpaper/interior/save' => [
+        'controller' => 'Admin:Interior@saveAction'
     ]
 ];
