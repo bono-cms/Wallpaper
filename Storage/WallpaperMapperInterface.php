@@ -14,6 +14,23 @@ namespace Wallpaper\Storage;
 interface WallpaperMapperInterface
 {
     /**
+     * Save companions
+     * 
+     * @param int $id Walloper id
+     * @param array $slaves Companion ids
+     * @return boolean
+     */
+    public function saveCompanions($id, array $slaves);
+
+    /**
+     * Fetch companion ids
+     * 
+     * @param int $id Walloper id
+     * @return array
+     */
+    public function fetchCompanionIds($id);
+
+    /**
      * Fetch a wallpaper by its id
      * 
      * @param string $id Page id

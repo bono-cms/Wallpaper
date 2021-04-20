@@ -61,6 +61,29 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     }
 
     /**
+     * Save companions
+     * 
+     * @param int $id Walloper id
+     * @param array $slaves Companion ids
+     * @return boolean
+     */
+    public function saveCompanions($id, array $slaves)
+    {
+        return $this->syncWithJunction(WallpaperCompanionMapper::getTableName(), $id, $slaves);
+    }
+
+    /**
+     * Fetch companion ids
+     * 
+     * @param int $id Walloper id
+     * @return array
+     */
+    public function fetchCompanionIds($id)
+    {
+        return $this->getSlaveIdsFromJunction(WallpaperCompanionMapper::getTableName(), $id);
+    }
+
+    /**
      * Fetch a wallpaper by its id
      * 
      * @param string $id Page id

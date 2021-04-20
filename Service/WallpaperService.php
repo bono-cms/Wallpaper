@@ -108,6 +108,29 @@ final class WallpaperService extends AbstractManager
     }
 
     /**
+     * Save companions
+     * 
+     * @param int $id Walloper id
+     * @param array $slaves Companion ids
+     * @return boolean
+     */
+    public function saveCompanions($id, array $slaves)
+    {
+        return $this->syncWithJunction(WallpaperCompanionMapper::getTableName(), $id, $slaves);
+    }
+
+    /**
+     * Fetch companion ids
+     * 
+     * @param int $id Walloper id
+     * @return array
+     */
+    public function fetchCompanionIds($id)
+    {
+        return $this->wallpaperMapper->fetchCompanionIds($id);
+    }
+
+    /**
      * Fetches a wallpaper by its id
      * 
      * @param int $id
