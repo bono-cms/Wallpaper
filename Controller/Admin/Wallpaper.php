@@ -40,7 +40,9 @@ final class Wallpaper extends AbstractController
      */
     private function createForm($wallpaper, $title)
     {
+        $wallpaperService = $this->getModuleService('wallpaperService');
         $isNew = !is_array($wallpaper);
+        $id = $isNew ? $wallpaper->getId() : $wallpaper[0]['id'];
 
         // Append breadcrumbs
         $this->view->getBreadcrumbBag()->addOne('Wallpaper', 'Wallpaper:Admin:Wallpaper@indexAction')
@@ -48,6 +50,7 @@ final class Wallpaper extends AbstractController
 
         return $this->view->render('wallpaper/form', [
             'wallpaper' => $wallpaper,
+            'companions' => $wallpaperService->fetchList($id),
             'isNew' => $isNew
         ]);
     }

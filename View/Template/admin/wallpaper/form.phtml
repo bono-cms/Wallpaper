@@ -67,6 +67,7 @@ use Cms\View\Icon;
         <div class="tab-pane fade" id="hotel-room-configuration" role="tabpanel">
             <?= $this->field()->hidden('wallpaper[id]', $entity->getId()); ?>
             <?= $this->field('SKU')->number('wallpaper[sku]', $entity->getSku(), ['class' => 'form-control']); ?>
+            <?= $this->field('Companions')->select('companions[]', $companions, null, ['class' => 'form-control', 'multiple' => true]); ?>
         </div>
     </div>
 
