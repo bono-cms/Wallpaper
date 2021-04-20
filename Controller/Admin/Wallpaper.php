@@ -51,6 +51,7 @@ final class Wallpaper extends AbstractController
         return $this->view->render('wallpaper/form', [
             'wallpaper' => $wallpaper,
             'companions' => $wallpaperService->fetchList($id),
+            'companionIds' => $isNew ? [] : $wallpaperService->fetchCompanionIds($id),
             'isNew' => $isNew
         ]);
     }
