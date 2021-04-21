@@ -25,6 +25,17 @@ final class WallpaperGalleryMapper extends AbstractMapper implements WallpaperGa
     }
 
     /**
+     * Fetches gallery image by its id
+     * 
+     * @param int $id Gallery image id
+     * @return array
+     */
+    public function fetchById($id)
+    {
+        return $this->fetchByPk($id);
+    }
+
+    /**
      * Fetch all gallery images by wallpaper id
      * 
      * @param int $wallpaperId

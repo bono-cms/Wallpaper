@@ -14,6 +14,14 @@ namespace Wallpaper\Storage;
 interface WallpaperGalleryMapperInterface
 {
     /**
+     * Fetches gallery image by its id
+     * 
+     * @param int $id Gallery image id
+     * @return array
+     */
+    public function fetchById($id);
+
+    /**
      * Fetch all gallery images by wallpaper id
      * 
      * @param int $wallpaperId
