@@ -14,6 +14,14 @@ namespace Wallpaper\Storage;
 interface WallpaperMapperInterface
 {
     /**
+     * Clear attached companions by primary id
+     * 
+     * @param int $id Walloper id
+     * @return boolean
+     */
+    public function clearCompanions($id);
+
+    /**
      * Save companions
      * 
      * @param int $id Walloper id

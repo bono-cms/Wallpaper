@@ -63,6 +63,17 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     }
 
     /**
+     * Clear attached companions by primary id
+     * 
+     * @param int $id Walloper id
+     * @return boolean
+     */
+    public function clearCompanions($id)
+    {
+        return $this->removeFromJunction(WallpaperCompanionMapper::getTableName(), $id);
+    }
+
+    /**
      * Save companions
      * 
      * @param int $id Walloper id
