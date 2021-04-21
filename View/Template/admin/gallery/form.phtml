@@ -3,6 +3,7 @@
     <?= $this->field()->hidden('image[wallpaper_id]', $image->getWallpaperId()); ?>
     <?= $this->field('Order')->text('image[order]', $image->getOrder(), ['class' => 'form-control']); ?>
     <?= $this->field('Color')->text('image[color]', $image->getColor(), ['class' => 'form-control']); ?>
+    <?= $this->field('SKU')->text('image[sku]', $image->getSku(), ['class' => 'form-control']); ?>
 
     <?php if ($image->getFilename()): ?>
     <div class="mt-2 mb-2">
