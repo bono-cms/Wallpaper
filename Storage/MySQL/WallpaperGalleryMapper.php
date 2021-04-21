@@ -25,6 +25,39 @@ final class WallpaperGalleryMapper extends AbstractMapper implements WallpaperGa
     }
 
     /**
+     * Creates shared query
+     * 
+     * @return \Krystal\Db\Sql\Db
+     */
+    private function createSharedQuery()
+    {
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            self::column('wallpaper_id'),
+            self::column('order'),
+            self::column('color'),
+            self::column('filename'),
+            WallpaperMapper::column('sku'),
+            WallpaperTranslationMapper::column('name') => 'wallpaper'
+        ];
+
+        $db = $this->db->select($columns)
+                       ->from(self::getTableName())
+                       // Wallpaper relation
+                       ->leftJoin(WallpaperMapper::getTableName(), [
+                            WallpaperMapper::column('id') => self::getRawColumn('wallpaper_id')
+                       ])
+                       // Wallpaper relation
+                       ->leftJoin(WallpaperTranslationMapper::getTableName(), [
+                            WallpaperTranslationMapper::column('id') => WallpaperMapper::getRawColumn('id'),
+                            WallpaperTranslationMapper::column('lang_id') => $this->getLangId()
+                       ]);
+
+        return $db;
+    }
+
+    /**
      * Fetches gallery image by its id
      * 
      * @param int $id Gallery image id
@@ -32,7 +65,10 @@ final class WallpaperGalleryMapper extends AbstractMapper implements WallpaperGa
      */
     public function fetchById($id)
     {
-        return $this->fetchByPk($id);
+        $db = $this->createSharedQuery()
+                   ->whereEquals(self::column('id'), $id);
+
+        return $db->query();
     }
 
     /**
@@ -43,11 +79,10 @@ final class WallpaperGalleryMapper extends AbstractMapper implements WallpaperGa
      */
     public function fetchAll($wallpaperId)
     {
-        $db = $this->db->select('*')
-                       ->from(self::getTableName())
-                       ->whereEquals('wallpaper_id', $wallpaperId)
-                       ->orderBy('id')
-                       ->desc();
+        $db = $this->createSharedQuery()
+                   ->whereEquals('wallpaper_id', $wallpaperId)
+                   ->orderBy('id')
+                   ->desc();
 
         return $db->queryAll();
     }
