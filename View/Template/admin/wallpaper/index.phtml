@@ -27,7 +27,6 @@ use Cms\View\Icon;
             <?php $this->loadPartial('items-per-page', ['caption' => 'Wallpapers']); ?>
         </div>
 
-
         <div class="table-responsive">
             <?= $this->widget(new GridViewWidget($wallpapers, [
                 'pk' => 'id',

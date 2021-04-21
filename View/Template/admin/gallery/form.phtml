@@ -1,0 +1,22 @@
+<form class="card" data-group="image" autocomplete="off">
+    <?= $this->field()->hidden('image[id]', $image->getId()); ?>
+    <?= $this->field()->hidden('image[wallpaper_id]', $image->getWallpaperId()); ?>
+    <?= $this->field('Order')->text('image[order]', $image->getOrder(), ['class' => 'form-control']); ?>
+    <?= $this->field('Color')->text('image[color]', $image->getColor(), ['class' => 'form-control']); ?>
+
+    <?php if ($image->getFilename()): ?>
+    <div class="mt-2 mb-2">
+        <img class="img-fluid" src="<?= $image->getFilename(); ?>" />
+    </div>
+    <?php endif; ?>
+
+    <?= $this->field('Filename')->fileData('image[filename]', $image->getFilename(), 'image/jpeg', ['class' => 'form-control']); ?>
+
+    <?php $this->loadPartial('actions', [
+        'new' => !$image->getId(),
+        'add' => ['Wallpaper:Admin:Gallery@addAction', $image->getWallpaperId()],
+        'edit' => 'Wallpaper:Admin:Gallery@editAction',
+        'save' => 'Wallpaper:Admin:Gallery@saveAction',
+        'cancel' => ['Wallpaper:Admin:Wallpaper@editAction', $image->getWallpaperId()]
+    ]); ?>
+</form>
