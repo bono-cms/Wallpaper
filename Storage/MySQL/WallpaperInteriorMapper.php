@@ -25,12 +25,11 @@ final class WallpaperInteriorMapper extends AbstractMapper implements WallpaperI
     }
 
     /**
-     * Fetch all interiors
+     * Creates shared query
      * 
-     * @param int $wallpaperId
-     * @return array
+     * @return \Krystal\Db\Sql\Db
      */
-    public function fetchAll($wallpaperId)
+    private function createSharedQuery()
     {
         // Columns to be selected
         $columns = [
@@ -52,10 +51,37 @@ final class WallpaperInteriorMapper extends AbstractMapper implements WallpaperI
                        ->leftJoin(WallpaperTranslationMapper::getTableName(), [
                             WallpaperTranslationMapper::column('id') => WallpaperMapper::getRawColumn('id'),
                             WallpaperTranslationMapper::column('lang_id') => $this->getLangId()
-                       ])
-                       ->whereEquals('wallpaper_id', $wallpaperId)
-                       ->orderBy('id')
-                       ->desc();
+                       ]);
+
+        return $db;
+    }
+
+    /**
+     * Fetch interior by its id
+     * 
+     * @param int $id
+     * @return array
+     */
+    public function fetchById($id)
+    {
+        $db = $this->createSharedQuery()
+                   ->whereEquals(self::column('id'), $id);
+
+        return $db->query();
+    }
+
+    /**
+     * Fetch all interiors
+     * 
+     * @param int $wallpaperId
+     * @return array
+     */
+    public function fetchAll($wallpaperId)
+    {
+        $db = $this->createSharedQuery()
+                   ->whereEquals(self::column('wallpaper_id'), $wallpaperId)
+                   ->orderBy(self::column('id'))
+                   ->desc();
 
         return $db->queryAll();
     }

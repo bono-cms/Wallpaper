@@ -81,7 +81,7 @@ final class WallpaperInteriorService extends AbstractManager
      */
     public function fetchById($id)
     {
-        return $this->prepareResult($this->wallpaperInteriorMapper->findByPk($id));
+        return $this->prepareResult($this->wallpaperInteriorMapper->fetchById($id));
     }
 
     /**
