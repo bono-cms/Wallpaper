@@ -24,7 +24,8 @@ final class WallpaperService extends AbstractManager
      */
     const CONTROLLER = 'Wallpaper:Wallpaper@viewAction';
     const MODULE = 'Wallpaper';
-    const LOCATION = 'data/uploads/module/wallpaper/interior';
+    const DIR_INTERIOR = 'data/uploads/module/wallpaper/interior';
+    const DIR_GALLERY = 'data/uploads/module/wallpaper/gallery';
 
     /**
      * Any compliant wallpaper mapper

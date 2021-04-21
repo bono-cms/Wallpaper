@@ -83,7 +83,7 @@ final class WallpaperInteriorService extends AbstractManager
     public function save(array $input)
     {
         // Upload file, if provided
-        $this->appendFileData($input, 'interior', 'filename', WallpaperService::LOCATION);
+        $this->appendFileData($input, 'interior', 'filename', WallpaperService::DIR_INTERIOR);
 
         return $this->wallpaperInteriorMapper->persist($input['data']['interior']);
     }

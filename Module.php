@@ -14,6 +14,7 @@ namespace Wallpaper;
 use Cms\AbstractCmsModule;
 use Wallpaper\Service\WallpaperService;
 use Wallpaper\Service\WallpaperInteriorService;
+use Wallpaper\Service\WallpaperGalleryService;
 
 final class Module extends AbstractCmsModule
 {
@@ -23,6 +24,7 @@ final class Module extends AbstractCmsModule
     public function getServiceProviders()
     {
         return [
+            'galleryService' => new WallpaperGalleryService($this->getMapper('\Wallpaper\Storage\MySQL\WallpaperGalleryMapper')),
             'wallpaperService' => new WallpaperService($this->getMapper('\Wallpaper\Storage\MySQL\WallpaperMapper'), $this->getWebPageManager()),
             'interiorService' => new WallpaperInteriorService($this->getMapper('\Wallpaper\Storage\MySQL\WallpaperInteriorMapper'))
         ];
