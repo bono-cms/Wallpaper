@@ -43,6 +43,7 @@ final class GalleryService extends AbstractManager
         $entity = new VirtualEntity();
         $entity->setId($row['id'])
                ->setWallpaperId($row['wallpaper_id'])
+               ->setSku($row['sku'])
                ->setOrder($row['order'])
                ->setColor($row['color'])
                ->setFilename($row['filename']);

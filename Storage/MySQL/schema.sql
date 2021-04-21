@@ -49,6 +49,7 @@ DROP TABLE IF EXISTS `bono_module_wallpaper_gallery`;
 CREATE TABLE `bono_module_wallpaper_gallery` (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `wallpaper_id` INT NOT NULL COMMENT 'Attached wallpaper id',
+    `sku` varchar(255) NOT NULL,
     `order` INT NOT NULL COMMENT 'Sorting order',
     `color` TINYINT NOT NULL COMMENT 'Color constant',
     `filename` varchar(255) NOT NULL,

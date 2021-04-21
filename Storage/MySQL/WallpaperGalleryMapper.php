@@ -38,7 +38,7 @@ final class WallpaperGalleryMapper extends AbstractMapper implements WallpaperGa
             self::column('order'),
             self::column('color'),
             self::column('filename'),
-            WallpaperMapper::column('sku'),
+            self::column('sku'),
             WallpaperTranslationMapper::column('name') => 'wallpaper'
         ];
 
