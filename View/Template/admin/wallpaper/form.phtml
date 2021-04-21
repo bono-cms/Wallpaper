@@ -12,7 +12,7 @@ use Cms\View\Icon;
         <li role="presentation" class="nav-item active"><a class="nav-link" href="#hotel-room-active" role="tab" data-toggle="tab"><i class="fas fa-hotel"></i> <?php $this->show('Wallpaper'); ?></a></li>
         <li role="presentation" class="nav-item"><a class="nav-link" href="#hotel-room-configuration" role="tab" data-toggle="tab"><i class="fas fa-dice"></i> <?php $this->show('Configuration'); ?></a></li>
         <?php if (!$isNew): ?>
-        <li role="presentation" class="nav-item"><a class="nav-link" href="#wall-interior" role="tab" data-toggle="tab"><i class="fas fa-link"></i> <?php $this->show('Interior'); ?></a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#wall-interior" role="tab" data-toggle="tab"><i class="fas fa-link"></i> <?php $this->show('Interior'); ?> <small class="text-muted">(<?= count($interiors); ?>)</small></a></li>
         <?php endif; ?>
 	</ul>
 
