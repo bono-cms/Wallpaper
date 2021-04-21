@@ -23,4 +23,21 @@ final class WallpaperGalleryMapper extends AbstractMapper implements WallpaperGa
     {
         return self::getWithPrefix('bono_module_wallpaper_gallery');
     }
+
+    /**
+     * Fetch all gallery images by wallpaper id
+     * 
+     * @param int $wallpaperId
+     * @return array
+     */
+    public function fetchAll($wallpaperId)
+    {
+        $db = $this->db->select('*')
+                       ->from(self::getTableName())
+                       ->whereEquals('wallpaper_id', $wallpaperId)
+                       ->orderBy('id')
+                       ->desc();
+
+        return $db->queryAll();
+    }
 }
