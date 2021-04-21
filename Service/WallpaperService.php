@@ -20,10 +20,11 @@ use Wallpaper\Storage\WallpaperMapperInterface;
 final class WallpaperService extends AbstractManager
 {
     /**
-     * Constants for router
+     * Module constants
      */
     const CONTROLLER = 'Wallpaper:Wallpaper@viewAction';
     const MODULE = 'Wallpaper';
+    const LOCATION = 'data/uploads/module/wallpaper/interior';
 
     /**
      * Any compliant wallpaper mapper

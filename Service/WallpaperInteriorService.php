@@ -62,7 +62,7 @@ final class WallpaperInteriorService extends AbstractManager
     {
         return $this->wallpaperInteriorMapper->getMaxId();
     }
-    
+
     /**
      * Saves an interior
      * 
@@ -71,7 +71,10 @@ final class WallpaperInteriorService extends AbstractManager
      */
     public function save(array $input)
     {
-        return $this->wallpaperInteriorMapper->persist($input['interior']);
+        // Upload file, if provided
+        $this->appendFileData($input, 'interior', 'filename', WallpaperService::LOCATION);
+
+        return $this->wallpaperInteriorMapper->persist($input['data']['interior']);
     }
 
     /**

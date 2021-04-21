@@ -96,12 +96,12 @@ final class Interior extends AbstractController
     public function saveAction()
     {
         // Get raw post data
-        $input = $this->request->getPost();
+        $input = $this->request->getAll();
 
         $interiorService = $this->getModuleService('interiorService');
         $interiorService->save($input);
 
-        if ($input['interior']['id']) {
+        if ($input['data']['interior']['id']) {
             $this->flashBag->set('success', 'An interior has been updated successfully');
             return 1;
         } else {

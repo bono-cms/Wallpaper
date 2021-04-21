@@ -1,8 +1,15 @@
-<form class="card" data-group="booking" autocomplete="off">
+<form class="card" data-group="interior" autocomplete="off">
     <?= $this->field()->hidden('interior[id]', $interior->getId()); ?>
     <?= $this->field()->hidden('interior[wallpaper_id]', $interior->getWallpaperId()); ?>
     <?= $this->field('Order')->text('interior[order]', $interior->getOrder(), ['class' => 'form-control']); ?>
-    <?= $this->field('Filename')->text('interior[filename]', $interior->getFilename(), ['class' => 'form-control']); ?>
+
+    <?php if ($interior->getFilename()): ?>
+    <div class="mt-2 mb-2">
+        <img class="img-fluid" src="<?= $interior->getFilename(); ?>" />
+    </div>
+    <?php endif; ?>
+
+    <?= $this->field('Filename')->fileData('interior[filename]', $interior->getFilename(), 'image/jpeg', ['class' => 'form-control']); ?>
 
     <?php $this->loadPartial('actions', [
         'new' => !$interior->getId(),
