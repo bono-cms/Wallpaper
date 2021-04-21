@@ -43,3 +43,15 @@ CREATE TABLE `bono_module_wallpaper_interior` (
 
     FOREIGN KEY (wallpaper_id) REFERENCES bono_module_wallpaper(id) ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+
+/* Gallery */
+DROP TABLE IF EXISTS `bono_module_wallpaper_gallery`;
+CREATE TABLE `bono_module_wallpaper_gallery` (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `wallpaper_id` INT NOT NULL COMMENT 'Attached wallpaper id',
+    `order` INT NOT NULL COMMENT 'Sorting order',
+    `color` TINYINT NOT NULL COMMENT 'Color constant',
+    `filename` varchar(255) NOT NULL,
+
+    FOREIGN KEY (wallpaper_id) REFERENCES bono_module_wallpaper(id) ON DELETE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
