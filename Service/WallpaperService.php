@@ -191,8 +191,8 @@ final class WallpaperService extends AbstractManager
         // Do we have on attached companion?
         if (isset($input['companions'])) {
             return $this->wallpaperMapper->saveCompanions($id, $input['companions']);
+        } else {
+            return $this->wallpaperMapper->clearCompanions($id);
         }
-
-        return true;
     }
 }
