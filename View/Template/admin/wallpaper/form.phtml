@@ -13,6 +13,7 @@ use Cms\View\Icon;
         <li role="presentation" class="nav-item"><a class="nav-link" href="#hotel-room-configuration" role="tab" data-toggle="tab"><i class="fas fa-dice"></i> <?php $this->show('Configuration'); ?></a></li>
         <?php if (!$isNew): ?>
         <li role="presentation" class="nav-item"><a class="nav-link" href="#wall-interior" role="tab" data-toggle="tab"><i class="fas fa-camera-retro"></i> <?php $this->show('Interior'); ?> <small class="text-muted">(<?= count($interiors); ?>)</small></a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#wall-gallery" role="tab" data-toggle="tab"><i class="fas fa-image"></i> <?php $this->show('Gallery'); ?> <small class="text-muted">(<?= count($images); ?>)</small></a></li>
         <?php endif; ?>
 	</ul>
 
@@ -118,7 +119,51 @@ use Cms\View\Icon;
                         }
                     ]
                 ])); ?>
-            </div>            
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="wall-gallery" role="tabpanel">
+            <p><a class="btn btn-primary" href="<?= $this->url('Wallpaper:Admin:Gallery@addAction', [$id]); ?>"><?= $this->translate('Upload new image'); ?></a></p>
+
+            <div class="table-responsive">
+                <?= $this->widget(new GridViewWidget($images, [
+                    'tableClass' => 'table table-hover table-bordered',
+                    'columns' => [
+                        [
+                            'column' => 'filename',
+                            'value' => function($image){
+                                return Element::image($image->getFilename(), ['class' => 'img-fluid w-50']);
+                            },
+                            'attributes' => [
+                                'class' => null
+                            ]
+                        ],
+
+                        [
+                            'column' => 'color',
+                            'attributes' => [
+                                'class' => 'text-center'
+                            ]
+                        ]
+                    ],
+
+                    'actions' => [
+                        function($image){
+                            return Icon::edit(
+                                $this->url('Wallpaper:Admin:Gallery@editAction', $image->getId()),
+                                $this->translate('Edit this image')
+                            );
+                        },
+
+                        function($image){
+                            return Icon::remove(
+                                $this->url('Wallpaper:Admin:Gallery@deleteAction', $image->getId()), 
+                                $this->translate('Remove this image')
+                            );
+                        }
+                    ]
+                ])); ?>
+            </div>
         </div>
         <?php endif; ?>
     </div>
