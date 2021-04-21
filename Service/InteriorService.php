@@ -15,7 +15,7 @@ use Cms\Service\AbstractManager;
 use Krystal\Stdlib\VirtualEntity;
 use Wallpaper\Storage\WallpaperInteriorMapperInterface;
 
-final class WallpaperInteriorService extends AbstractManager
+final class InteriorService extends AbstractManager
 {
     /**
      * Any-compliant interior mapper

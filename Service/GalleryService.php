@@ -15,7 +15,7 @@ use Krystal\Stdlib\VirtualEntity;
 use Cms\Service\AbstractManager;
 use Wallpaper\Storage\WallpaperGalleryMapperInterface;
 
-final class WallpaperGalleryService extends AbstractManager
+final class GalleryService extends AbstractManager
 {
     /**
      * Any compliant gallery mapper
