@@ -82,14 +82,6 @@ use Cms\View\Icon;
                     'tableClass' => 'table table-hover table-bordered',
                     'columns' => [
                         [
-                            'column' => 'id',
-                            'label' => '#',
-                            'attributes' => [
-                                'class' => 'text-center text-muted'
-                            ]
-                        ],
-
-                        [
                             'column' => 'filename',
                             'value' => function($interior){
                                 return Element::image($interior->getFilename(), ['class' => 'img-fluid w-50']);
@@ -98,6 +90,16 @@ use Cms\View\Icon;
                                 'class' => null
                             ]
                         ],
+
+                        [
+                            'column' => 'Primary',
+                            'value' => function($interior) use ($entity){
+                                return Element::radio('wallpaper[interior_id]', $interior->getId(), $entity->getInteriorId() == $interior->getId());
+                            },
+                            'attributes' => [
+                                'class' => 'text-center'
+                            ]
+                        ]
                     ],
 
                     'actions' => [
