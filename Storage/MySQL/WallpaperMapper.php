@@ -43,6 +43,8 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
         return [
             self::column('id'),
             self::column('sku'),
+            self::column('interior_id'),
+            WallpaperInteriorMapper::column('filename') => 'interior',
 
             // Translations
             WallpaperTranslationMapper::column('lang_id'),
@@ -84,6 +86,21 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     }
 
     /**
+     * Create shared select instance
+     * 
+     * @return \Krystal\Db\Sql\Db
+     */
+    private function createSharedSelect()
+    {
+        $db = $this->createWebPageSelect($this->getColumns())
+                   ->leftJoin(WallpaperInteriorMapper::getTableName(), [
+                        WallpaperInteriorMapper::column('id') => self::getRawColumn('interior_id')
+                   ]);
+
+        return $db;
+    }
+
+    /**
      * Fetch a wallpaper by its id
      * 
      * @param string $id Page id
@@ -92,7 +109,15 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
      */
     public function fetchById($id, $withTranslations)
     {
-        return $this->findWebPage($this->getColumns(), $id, $withTranslations);
+        $db = $this->createSharedSelect()
+                   ->whereEquals(self::column('id'), $id);
+        
+        if ($withTranslations === true) {
+            return $db->queryAll();
+        } else {
+            return $db->andWhereEquals(self::column(self::PARAM_COLUMN_LANG_ID, self::getTranslationTable()), $this->getLangId())
+                      ->query();
+        }
     }
 
     /**
@@ -125,7 +150,7 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
      */
     public function fetchAll()
     {
-        $db = $this->createWebPageSelect($this->getColumns())
+        $db = $this->createSharedSelect()
                    ->whereEquals(WallpaperTranslationMapper::column('lang_id'), $this->getLangId())
                    ->orderBy(self::column('id'))
                    ->desc();
