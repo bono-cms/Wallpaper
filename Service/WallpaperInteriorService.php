@@ -64,6 +64,17 @@ final class WallpaperInteriorService extends AbstractManager
     }
 
     /**
+     * Deletes interior image by its id
+     * 
+     * @param int $id
+     * @return boolean
+     */
+    public function deleteById($id)
+    {
+        return $this->wallpaperInteriorMapper->deleteByPk($id);
+    }
+
+    /**
      * Saves an interior
      * 
      * @param array $input
