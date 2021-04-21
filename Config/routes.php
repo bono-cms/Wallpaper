@@ -37,5 +37,22 @@ return [
 
     '/%s/module/wallpaper/interior/save' => [
         'controller' => 'Admin:Interior@saveAction'
+    ],
+    
+    // Gallery
+    '/%s/module/wallpaper/gallery/add/(:var)' => [
+        'controller' => 'Admin:Gallery@addAction'
+    ],
+
+    '/%s/module/wallpaper/gallery/edit/(:var)' => [
+        'controller' => 'Admin:Gallery@editAction'
+    ],
+
+    '/%s/module/wallpaper/gallery/delete/(:var)' => [
+        'controller' => 'Admin:Gallery@deleteAction'
+    ],
+
+    '/%s/module/wallpaper/gallery/save' => [
+        'controller' => 'Admin:Gallery@saveAction'
     ]
 ];
