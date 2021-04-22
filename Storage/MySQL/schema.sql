@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS `bono_module_wallpaper`;
 CREATE TABLE `bono_module_wallpaper` (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `interior_id` INT DEFAULT NULL COMMENT 'Attached iterior image ID',
+    `image_id` INT DEFAULT NULL COMMENT 'Attached primary image ID',
     `sku` varchar(255) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
 

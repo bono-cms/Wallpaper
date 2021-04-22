@@ -44,7 +44,9 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
             self::column('id'),
             self::column('sku'),
             self::column('interior_id'),
+            self::column('image_id'),
             WallpaperInteriorMapper::column('filename') => 'interior',
+            WallpaperGalleryMapper::column('filename') => 'image',
 
             // Translations
             WallpaperTranslationMapper::column('lang_id'),
@@ -106,6 +108,9 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
         $db = $this->createWebPageSelect($this->getColumns())
                    ->leftJoin(WallpaperInteriorMapper::getTableName(), [
                         WallpaperInteriorMapper::column('id') => self::getRawColumn('interior_id')
+                   ])
+                   ->leftJoin(WallpaperGalleryMapper::getTableName(), [
+                        WallpaperGalleryMapper::column('id') => self::getRawColumn('image_id')
                    ]);
 
         return $db;
@@ -122,7 +127,7 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     {
         $db = $this->createSharedSelect()
                    ->whereEquals(self::column('id'), $id);
-        
+
         if ($withTranslations === true) {
             return $db->queryAll();
         } else {
