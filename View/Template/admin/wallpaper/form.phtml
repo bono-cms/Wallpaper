@@ -145,7 +145,17 @@ use Cms\View\Icon;
                                 'class' => 'text-center'
                             ]
                         ],
-                        
+
+                        [
+                            'column' => 'primary',
+                            'value' => function($image) use ($entity){
+                                return Element::radio('wallpaper[image_id]', $image->getId(), $entity->getImageId() == $image->getId());
+                            },
+                            'attributes' => [
+                                'class' => 'text-center'
+                            ]
+                        ],
+
                         [
                             'column' => 'sku',
                             'label' => 'SKU'
