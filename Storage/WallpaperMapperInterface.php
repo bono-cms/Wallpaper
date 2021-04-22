@@ -58,7 +58,11 @@ interface WallpaperMapperInterface
     /**
      * Fetch all wallpapers
      * 
+     * @param int $page Current page
+     * @param int $limit Output limit
+     * @param array $filter
+     * @param boolean|string $sort
      * @return array
      */
-    public function fetchAll();
+    public function fetchAll($page = null, $limit = null, array $filter = [], $sort = false);
 }

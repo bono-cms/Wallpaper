@@ -14,6 +14,7 @@ namespace Wallpaper\Storage\MySQL;
 use Cms\Storage\MySQL\WebPageMapper;
 use Cms\Storage\MySQL\AbstractMapper;
 use Wallpaper\Storage\WallpaperMapperInterface;
+use Wallpaper\Collection\ColorCollection;
 
 final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInterface
 {
@@ -162,14 +163,42 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     /**
      * Fetch all wallpapers
      * 
+     * @param int $page Current page
+     * @param int $limit Output limit
+     * @param array $filter
+     * @param boolean|string $sort
      * @return array
      */
-    public function fetchAll()
+    public function fetchAll($page = null, $limit = null, array $filter = [], $sort = false)
     {
         $db = $this->createSharedSelect()
-                   ->whereEquals(WallpaperTranslationMapper::column('lang_id'), $this->getLangId())
-                   ->orderBy(self::column('id'))
+                   ->whereEquals(WallpaperTranslationMapper::column('lang_id'), $this->getLangId());
+
+        // Color filter
+        if (isset($filter['color']) && (new ColorCollection)->hasKey($filter['color'])) {
+            $db->andWhereEquals(self::column('color'), $filter['color']);
+        }
+
+        switch ($sort) {
+            case false:
+                $db->orderBy(self::column('id'))
                    ->desc();
+            break;
+
+            case 'sku':
+                $db->orderBy(self::column('sky'));
+            break;
+        }
+
+        // Limit
+        if ($page === null && $limit !== null) {
+            $db->limit($limit);
+        }
+
+        // Apply pagination
+        if ($page !== null && $limit !== null){
+            $db->paginate($page, $limit);
+        }
 
         return $db->queryAll();
     }

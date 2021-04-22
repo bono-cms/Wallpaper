@@ -166,11 +166,15 @@ final class WallpaperService extends AbstractManager
     /**
      * Fetch all wallpapers
      * 
+     * @param int $page Current page
+     * @param int $limit Output limit
+     * @param array $filter
+     * @param boolean|string $sort
      * @return array
      */
-    public function fetchAll()
+    public function fetchAll($page = null, $limit = null, array $filter = [], $sort = false)
     {
-        return $this->prepareResults($this->wallpaperMapper->fetchAll());
+        return $this->prepareResults($this->wallpaperMapper->fetchAll($page, $limit, $filter, $sort));
     }
 
     /**
