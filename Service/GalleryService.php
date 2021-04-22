@@ -14,6 +14,7 @@ namespace Wallpaper\Service;
 use Krystal\Stdlib\VirtualEntity;
 use Cms\Service\AbstractManager;
 use Wallpaper\Storage\WallpaperGalleryMapperInterface;
+use Wallpaper\Collection\ColorCollection;
 
 final class GalleryService extends AbstractManager
 {
@@ -40,12 +41,15 @@ final class GalleryService extends AbstractManager
      */
     protected function toEntity(array $row)
     {
+        $colorCol = new ColorCollection();
+
         $entity = new VirtualEntity();
         $entity->setId($row['id'])
                ->setWallpaperId($row['wallpaper_id'])
                ->setSku($row['sku'])
                ->setOrder($row['order'])
                ->setColor($row['color'])
+               ->setColorName($colorCol->findByKey($row['color']))
                ->setFilename($row['filename']);
 
         if (isset($row['wallpaper'])) {
