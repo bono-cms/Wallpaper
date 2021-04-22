@@ -23,4 +23,17 @@ final class ColorCollection extends ArrayCollection
     const YELLOW = 5;
     const BROWN = 6;
     const PURPLE = 7;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected $collection = [
+        self::WHITE => 'White',
+        self::BLACK => 'Black',
+        self::BLUE => 'Blue',
+        self::RED => 'Red',
+        self::YELLOW => 'Yellow',
+        self::BROWN => 'Brown',
+        self::PURPLE => 'Purple'
+    ];
 }
