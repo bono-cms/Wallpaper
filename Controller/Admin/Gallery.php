@@ -11,6 +11,7 @@
 
 namespace Wallpaper\Controller\Admin;
 
+use Wallpaper\Collection\ColorCollection;
 use Cms\Controller\Admin\AbstractController;
 use Krystal\Stdlib\VirtualEntity;
 
@@ -70,7 +71,8 @@ final class Gallery extends AbstractController
                                        ->addOne($title);
 
         return $this->view->render('gallery/form', [
-            'image' => $image
+            'image' => $image,
+            'colors' => (new ColorCollection)->getAll()
         ]);
     }
 
