@@ -27,7 +27,8 @@ final class Wallpaper extends AbstractController
         $wallpaper = $this->getModuleService('wallpaperService')->fetchById($id, false);
 
         if ($wallpaper) {
-            $wallpaper->setGallery($this->getModuleService('galleryService')->fetchAll($id));
+            $wallpaper->setGallery($this->getModuleService('galleryService')->fetchAll($id))
+                      ->setInteriors($this->getModuleService('interiorService')->fetchAll($id));
 
             // ...
         } else {
