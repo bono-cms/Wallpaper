@@ -1,6 +1,10 @@
 <?php
 
 return [
+    '/module/wallpaper/filter' => [
+        'controller' => 'Wallpaper@filterAction'
+    ],
+
     // Wallpaper
     '/%s/module/wallpaper' => [
         'controller' => 'Admin:Wallpaper@indexAction'

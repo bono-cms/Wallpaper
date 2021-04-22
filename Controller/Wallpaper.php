@@ -12,6 +12,7 @@
 namespace Wallpaper\Controller;
 
 use Site\Controller\AbstractController;
+use Krystal\Stdlib\VirtualEntity;
 
 final class Wallpaper extends AbstractController
 {
@@ -41,8 +42,26 @@ final class Wallpaper extends AbstractController
      */
     public function filterAction()
     {
+        // Request variables
         $filter = $this->request->getQuery('filter', []);
+        $page = $this->request->getQuery('page', 1);
+        $limit = 6;
+        $sort = $this->request->getQuery('sort', false);
 
-        // ...
+        // Load view plugins
+        $this->loadSitePlugins();
+
+        $wallpaperService = $this->getModuleService('wallpaperService');
+
+        $page = new VirtualEntity();
+        $page->setSeo(false)
+             ->setTitle($this->translator->translate('Wallpaper catalog'));
+
+        return $this->view->render('wallpaper-catalog', [
+            'languages' => $this->getService('Cms', 'languageManager')->fetchAll(true),
+            'page' => $page,
+            'wallpapers' => $wallpaperService->fetchAll($page, $limit, $filter, $sort),
+            'paginator' => $wallpaperService->getPaginator()
+        ]);
     }
 }
