@@ -24,13 +24,21 @@ final class Wallpaper extends AbstractController
      */
     public function viewAction($id)
     {
-        $wallpaper = $this->getModuleService('wallpaperService')->fetchById($id, false);
+        $wallpaperService = $this->getModuleService('wallpaperService');
+        $wallpaper = $wallpaperService->fetchById($id, false);
 
         if ($wallpaper) {
             $wallpaper->setGallery($this->getModuleService('galleryService')->fetchAll($id))
                       ->setInteriors($this->getModuleService('interiorService')->fetchAll($id));
 
-            // ...
+            $this->loadSitePlugins();
+
+            return $this->view->render('wallpaper-single', [
+                'wallpaper' => $wallpaper,
+                'page' => $wallpaper,
+                'languages' => $wallpaperService->getSwitchUrls($id)
+            ]);
+
         } else {
             return false;
         }
