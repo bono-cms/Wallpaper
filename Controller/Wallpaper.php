@@ -52,6 +52,10 @@ final class Wallpaper extends AbstractController
         $this->loadSitePlugins();
 
         $wallpaperService = $this->getModuleService('wallpaperService');
+        $wallpapers = $wallpaperService->fetchAll($page, $limit, $filter, $sort);
+
+        // Append images
+        $this->getModuleService('galleryService')->appendImages($wallpapers);
 
         $page = new VirtualEntity();
         $page->setSeo(false)
@@ -60,7 +64,7 @@ final class Wallpaper extends AbstractController
         return $this->view->render('wallpaper-catalog', [
             'languages' => $this->getService('Cms', 'languageManager')->fetchAll(true),
             'page' => $page,
-            'wallpapers' => $wallpaperService->fetchAll($page, $limit, $filter, $sort),
+            'wallpapers' => $wallpapers,
             'paginator' => $wallpaperService->getPaginator()
         ]);
     }

@@ -92,6 +92,19 @@ final class GalleryService extends AbstractManager
     }
 
     /**
+     * Append images
+     * 
+     * @param array $wallpapers
+     * @return void
+     */
+    public function appendImages(array $wallpapers)
+    {
+        foreach ($wallpapers as $wallpaper) {
+            $wallpaper->setImages($this->fetchAll($wallpaper->getId()));
+        }
+    }
+
+    /**
      * Saves gallery image
      * 
      * @param array $input
