@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Shop\Collection;
+namespace Wallpaper\Collection;
 
 use Krystal\Stdlib\ArrayCollection;
 
