@@ -5,7 +5,11 @@ CREATE TABLE `bono_module_wallpaper` (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `interior_id` INT DEFAULT NULL COMMENT 'Attached iterior image ID',
     `image_id` INT DEFAULT NULL COMMENT 'Attached primary image ID',
-    `sku` varchar(255) NOT NULL
+    `sku` varchar(255) NOT NULL,
+    `purpose` TINYINT NOT NULL COMMENT 'Purpose constant',
+    `figure` TINYINT NOT NULL COMMENT 'Figure constant',
+    `format` TINYINT NOT NULL COMMENT 'Format constant'
+
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
 
 DROP TABLE IF EXISTS `bono_module_wallpaper_translations`;
