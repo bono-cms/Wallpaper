@@ -93,6 +93,16 @@ final class WallpaperService extends AbstractManager
     }
 
     /**
+     * Returns prepared pagination instance
+     * 
+     * @return \Krystal\Paginate\Paginator
+     */
+    public function getPaginator()
+    {
+        return $this->wallpaperMapper->getPaginator();
+    }
+
+    /**
      * Returns last wallpaper id
      * 
      * @return string
