@@ -15,6 +15,9 @@ use Cms\Storage\MySQL\WebPageMapper;
 use Cms\Storage\MySQL\AbstractMapper;
 use Wallpaper\Storage\WallpaperMapperInterface;
 use Wallpaper\Collection\ColorCollection;
+use Wallpaper\Collection\PatternCollection;
+use Wallpaper\Collection\FormatCollection;
+use Wallpaper\Collection\PurposeCollection;
 
 final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInterface
 {
@@ -180,6 +183,21 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
         // Color filter
         if (isset($filter['colors']) && (new ColorCollection)->hasKeys($filter['colors'])) {
             $db->andWhereIn(WallpaperGalleryMapper::column('color'), $filter['colors']);
+        }
+
+        // Purposes filter
+        if (isset($filter['purposes']) && (new PurposeCollection)->hasKeys($filter['purposes'])) {
+            $db->andWhereIn(self::column('purpose'), $filter['purposes']);
+        }
+
+        // Patterns filter
+        if (isset($filter['patterns']) && (new PatternCollection)->hasKeys($filter['patterns'])) {
+            $db->andWhereIn(self::column('pattern'), $filter['patterns']);
+        }
+
+        // Formats filter
+        if (isset($filter['formats']) && (new FormatCollection)->hasKeys($filter['formats'])) {
+            $db->andWhereIn(self::column('format'), $filter['formats']);
         }
 
         switch ($sort) {
