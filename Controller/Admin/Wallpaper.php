@@ -13,6 +13,9 @@ namespace Wallpaper\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
 use Krystal\Stdlib\VirtualEntity;
+use Wallpaper\Collection\PatternCollection;
+use Wallpaper\Collection\FormatCollection;
+use Wallpaper\Collection\PurposeCollection;
 
 final class Wallpaper extends AbstractController
 {
@@ -55,7 +58,12 @@ final class Wallpaper extends AbstractController
             'interiors' => $isNew ? [] : $this->getModuleService('interiorService')->fetchAll($id),
             'images' => $isNew ? [] : $this->getModuleService('galleryService')->fetchAll($id),
             'isNew' => $isNew,
-            'id' => $id
+            'id' => $id,
+            'collection' => [
+                'patterns' => (new PatternCollection)->getAll(),
+                'formats' => (new FormatCollection)->getAll(),
+                'purposes' => (new PurposeCollection)->getAll()
+            ]
         ]);
     }
 

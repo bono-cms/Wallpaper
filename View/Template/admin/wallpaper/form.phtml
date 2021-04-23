@@ -72,6 +72,9 @@ use Cms\View\Icon;
             <?= $this->field()->hidden('wallpaper[id]', $entity->getId()); ?>
             <?= $this->field('SKU')->number('wallpaper[sku]', $entity->getSku(), ['class' => 'form-control']); ?>
             <?= $this->field('Companions')->select('companions[]', $companions, $companionIds, ['class' => 'form-control', 'multiple' => true]); ?>
+            <?= $this->field('Purpose')->select('wallpaper[purpose]', $collection['purposes'], $entity->getPurpose(), ['class' => 'form-control'], ''); ?>
+            <?= $this->field('Format')->select('wallpaper[format]', $collection['formats'], $entity->getFormat(), ['class' => 'form-control'], ''); ?>
+            <?= $this->field('Pattern')->select('wallpaper[pattern]', $collection['patterns'], $entity->getPattern(), ['class' => 'form-control'], ''); ?>
         </div>
 
         <?php if (!$isNew): ?>
