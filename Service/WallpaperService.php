@@ -190,7 +190,14 @@ final class WallpaperService extends AbstractManager
      */
     public function fetchList($id)
     {
-        return ArrayUtils::arrayList($this->wallpaperMapper->fetchList($id), 'id', 'sku');
+        $output = [];
+        $rows = $this->wallpaperMapper->fetchList($id);
+
+        foreach ($rows as $row) {
+            $output['id'] = sprintf('%s / %s', $row['name'], $row['sku']);
+        }
+
+        return $output;
     }
 
     /**
