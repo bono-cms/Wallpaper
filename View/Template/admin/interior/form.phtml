@@ -9,7 +9,7 @@
     </div>
     <?php endif; ?>
 
-    <?= $this->field('Filename')->fileData('interior[filename]', $interior->getFilename(), 'image/jpeg', ['class' => 'form-control']); ?>
+    <?= $this->field('Image file')->fileData('interior[filename]', $interior->getFilename(), 'image/jpeg', ['class' => 'form-control']); ?>
 
     <?php $this->loadPartial('actions', [
         'new' => !$interior->getId(),

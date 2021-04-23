@@ -87,6 +87,7 @@ use Cms\View\Icon;
                     'columns' => [
                         [
                             'column' => 'filename',
+                            'label' => 'Image',
                             'value' => function($interior){
                                 return Element::image($interior->getFilename(), ['class' => 'img-fluid w-50']);
                             },
@@ -96,7 +97,7 @@ use Cms\View\Icon;
                         ],
 
                         [
-                            'column' => 'Primary',
+                            'column' => 'primary',
                             'value' => function($interior) use ($entity){
                                 return Element::radio('wallpaper[interior_id]', $interior->getId(), $entity->getInteriorId() == $interior->getId());
                             },
@@ -110,14 +111,14 @@ use Cms\View\Icon;
                         function($interior){
                             return Icon::edit(
                                 $this->url('Wallpaper:Admin:Interior@editAction', $interior->getId()),
-                                $this->translate('Edit this interior')
+                                $this->translate('Edit this interior image')
                             );
                         },
 
                         function($interior){
                             return Icon::remove(
                                 $this->url('Wallpaper:Admin:Interior@deleteAction', $interior->getId()), 
-                                $this->translate('Remove this interior')
+                                $this->translate('Remove this interior image')
                             );
                         }
                     ]
@@ -144,6 +145,8 @@ use Cms\View\Icon;
 
                         [
                             'column' => 'color_name',
+                            'label' => 'Color',
+                            'translateable' => true,
                             'attributes' => [
                                 'class' => 'text-center'
                             ]

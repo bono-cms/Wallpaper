@@ -11,7 +11,7 @@
     </div>
     <?php endif; ?>
 
-    <?= $this->field('Filename')->fileData('image[filename]', $image->getFilename(), 'image/jpeg', ['class' => 'form-control']); ?>
+    <?= $this->field('Image file')->fileData('image[filename]', $image->getFilename(), 'image/jpeg', ['class' => 'form-control']); ?>
 
     <?php $this->loadPartial('actions', [
         'new' => !$image->getId(),

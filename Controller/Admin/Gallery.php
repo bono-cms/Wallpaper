@@ -63,16 +63,16 @@ final class Gallery extends AbstractController
      */
     private function createForm(VirtualEntity $image)
     {
-        $title = !$image->getId() ? 'Gallery image has been added successfully' : 'Gallery image has been updated successfully';
+        $title = $image->getId() ? 'Edit gallery image' : 'Upload new gallery image';
 
         // Append breadcrumbs
-        $this->view->getBreadcrumbBag()->addOne('Wallpaper', 'Wallpaper:Admin:Wallpaper@indexAction')
-                                       ->addOne($this->translator->translate('Edit the image "%s"', $image->getWallpaper()), $this->createUrl('Wallpaper:Admin:Wallpaper@editAction', [$image->getWallpaperId()]))
+        $this->view->getBreadcrumbBag()->addOne('Wallpapers', 'Wallpaper:Admin:Wallpaper@indexAction')
+                                       ->addOne($this->translator->translate('Edit the wallpaper "%s"', $image->getWallpaper()), $this->createUrl('Wallpaper:Admin:Wallpaper@editAction', [$image->getWallpaperId()]))
                                        ->addOne($title);
 
         return $this->view->render('gallery/form', [
             'image' => $image,
-            'colors' => (new ColorCollection)->getAll()
+            'colors' => $this->translator->translateArray((new ColorCollection)->getAll())
         ]);
     }
 

@@ -62,10 +62,10 @@ final class Interior extends AbstractController
      */
     private function createForm(VirtualEntity $interior)
     {
-        $title = !$interior->getId() ? 'Interior has been added successfully' : 'Interior has been updated successfully';
+        $title = !$interior->getId() ? 'Upload new new interior image' : 'Update interior image';
 
         // Append breadcrumbs
-        $this->view->getBreadcrumbBag()->addOne('Wallpaper', 'Wallpaper:Admin:Wallpaper@indexAction')
+        $this->view->getBreadcrumbBag()->addOne('Wallpapers', 'Wallpaper:Admin:Wallpaper@indexAction')
                                        ->addOne($this->translator->translate('Edit the wallpaper "%s"', $interior->getWallpaper()), $this->createUrl('Wallpaper:Admin:Wallpaper@editAction', [$interior->getWallpaperId()]))
                                        ->addOne($title);
 

@@ -27,7 +27,7 @@ final class Wallpaper extends AbstractController
     public function indexAction()
     {
         // Append breadcrumbs
-        $this->view->getBreadcrumbBag()->addOne('Wallpaper');
+        $this->view->getBreadcrumbBag()->addOne('Wallpapers');
 
         return $this->view->render('wallpaper/index', [
             'wallpapers' => $this->getModuleService('wallpaperService')->fetchAll()
@@ -48,8 +48,8 @@ final class Wallpaper extends AbstractController
         $id = $isNew ? $wallpaper->getId() : $wallpaper[0]['id'];
 
         // Append breadcrumbs
-        $this->view->getBreadcrumbBag()->addOne('Wallpaper', 'Wallpaper:Admin:Wallpaper@indexAction')
-                                       ->addOne($isNew ? 'Add new wallpaper' : 'Update wallpaper');
+        $this->view->getBreadcrumbBag()->addOne('Wallpapers', 'Wallpaper:Admin:Wallpaper@indexAction')
+                                       ->addOne($title);
 
         return $this->view->render('wallpaper/form', [
             'wallpaper' => $wallpaper,
@@ -60,9 +60,9 @@ final class Wallpaper extends AbstractController
             'isNew' => $isNew,
             'id' => $id,
             'collection' => [
-                'patterns' => (new PatternCollection)->getAll(),
-                'formats' => (new FormatCollection)->getAll(),
-                'purposes' => (new PurposeCollection)->getAll()
+                'patterns' => $this->translator->translateArray((new PatternCollection)->getAll()),
+                'formats' => $this->translator->translateArray((new FormatCollection)->getAll()),
+                'purposes' => $this->translator->translateArray((new PurposeCollection)->getAll())
             ]
         ]);
     }
@@ -88,7 +88,8 @@ final class Wallpaper extends AbstractController
         $wallpaper = $this->getModuleService('wallpaperService')->fetchById($id, true);
 
         if ($wallpaper) {
-            return $this->createForm($wallpaper, 'Edit the wallpaper');
+            $name = $this->getCurrentProperty($wallpaper, 'name');
+            return $this->createForm($wallpaper, $this->translator->translate('Edit the wallpaper "%s"', $name));
         } else {
             return false;
         }

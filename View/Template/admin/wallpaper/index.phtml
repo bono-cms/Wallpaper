@@ -22,11 +22,11 @@ use Cms\View\Icon;
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header">
-            <?php $this->loadPartial('items-per-page', ['caption' => 'Wallpapers']); ?>
-        </div>
+    <div class="mt-4 mb-3">
+        <h3><i class="fas fa-scroll"></i> <?= $this->translate('Wallpapers'); ?> <small class="text-muted">(<?= count($wallpapers); ?>)</small></h3>
+    </div>
 
+    <div class="card">
         <div class="table-responsive">
             <?= $this->widget(new GridViewWidget($wallpapers, [
                 'pk' => 'id',
@@ -52,7 +52,7 @@ use Cms\View\Icon;
 
                 'actions' => [
                     function($wallpaper){
-                        return Icon::view($wallpaper->getUrl(), $this->translate('View this page on site'));
+                        return Icon::view($wallpaper->getUrl(), $this->translate('View this wallpaper on site'));
                     },
 
                     function($wallpaper){
