@@ -124,6 +124,30 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     }
 
     /**
+     * Fetch companions by primary id
+     * 
+     * @param int $id
+     * @return array
+     */
+    public function fetchCompanionsById($id)
+    {
+        $ids = $this->fetchCompanionIds($id);
+
+        // Avoid running empty query on empty result-set
+        if (!empty($ids)) {
+            $db = $this->createSharedSelect()
+                       ->whereEquals(WallpaperTranslationMapper::column('lang_id'), $this->getLangId())
+                       ->andWhereIn(self::column('id'), $ids)
+                       ->orderBy(self::column('id'))
+                       ->desc();
+
+            return $db->queryAll();
+        } else {
+            return [];
+        }
+    }
+
+    /**
      * Fetch a wallpaper by its id
      * 
      * @param string $id Page id

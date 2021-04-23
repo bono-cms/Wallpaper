@@ -150,6 +150,17 @@ final class WallpaperService extends AbstractManager
     }
 
     /**
+     * Fetch companions by primary id
+     * 
+     * @param int $id
+     * @return array
+     */
+    public function fetchCompanionsById($id)
+    {
+        return $this->prepareResults($this->wallpaperMapper->fetchCompanionsById($id));
+    }
+
+    /**
      * Fetches a wallpaper by its id
      * 
      * @param int $id

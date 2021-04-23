@@ -39,6 +39,14 @@ interface WallpaperMapperInterface
     public function fetchCompanionIds($id);
 
     /**
+     * Fetch companions by primary id
+     * 
+     * @param int $id
+     * @return array
+     */
+    public function fetchCompanionsById($id);
+
+    /**
      * Fetch a wallpaper by its id
      * 
      * @param string $id Page id
