@@ -178,8 +178,8 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
                    ->whereEquals(WallpaperTranslationMapper::column('lang_id'), $this->getLangId());
 
         // Color filter
-        if (isset($filter['color']) && (new ColorCollection)->hasKey($filter['color'])) {
-            $db->andWhereEquals(self::column('color'), $filter['color']);
+        if (isset($filter['colors']) && (new ColorCollection)->hasKeys($filter['colors'])) {
+            $db->andWhereIn(WallpaperGalleryMapper::column('color'), $filter['colors']);
         }
 
         switch ($sort) {
