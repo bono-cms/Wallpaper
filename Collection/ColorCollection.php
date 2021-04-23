@@ -15,25 +15,16 @@ use Krystal\Stdlib\ArrayCollection;
 
 final class ColorCollection extends ArrayCollection
 {
-    /* Color constants */
-    const WHITE = 1;
-    const BLACK = 2;
-    const BLUE = 3;
-    const RED = 4;
-    const YELLOW = 5;
-    const BROWN = 6;
-    const PURPLE = 7;
-
     /**
      * {@inheritDoc}
      */
     protected $collection = [
-        self::WHITE => 'White',
-        self::BLACK => 'Black',
-        self::BLUE => 'Blue',
-        self::RED => 'Red',
-        self::YELLOW => 'Yellow',
-        self::BROWN => 'Brown',
-        self::PURPLE => 'Purple'
+        1 => 'White',
+        2 => 'Black',
+        3 => 'Blue',
+        4 => 'Red',
+        5 => 'Yellow',
+        6 => 'Brown',
+        7 => 'Purple'
     ];
 }
