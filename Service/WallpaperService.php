@@ -79,7 +79,7 @@ final class WallpaperService extends AbstractManager
                ->setPriority($row['priority'])
                ->setPurpose($row['purpose'])
                ->setFormat($row['format'])
-               ->setFigure($row['figure']);
+               ->setPattern($row['pattern']);
 
         return $entity;
     }

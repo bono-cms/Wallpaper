@@ -7,7 +7,7 @@ CREATE TABLE `bono_module_wallpaper` (
     `image_id` INT DEFAULT NULL COMMENT 'Attached primary image ID',
     `sku` varchar(255) NOT NULL,
     `purpose` TINYINT NOT NULL COMMENT 'Purpose constant',
-    `figure` TINYINT NOT NULL COMMENT 'Figure constant',
+    `pattern` TINYINT NOT NULL COMMENT 'Pattern constant',
     `format` TINYINT NOT NULL COMMENT 'Format constant'
 
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
