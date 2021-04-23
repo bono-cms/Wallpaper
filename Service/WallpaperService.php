@@ -16,6 +16,9 @@ use Cms\Service\AbstractManager;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Wallpaper\Storage\WallpaperMapperInterface;
+use Wallpaper\Collection\PatternCollection;
+use Wallpaper\Collection\FormatCollection;
+use Wallpaper\Collection\PurposeCollection;
 
 final class WallpaperService extends AbstractManager
 {
@@ -78,8 +81,11 @@ final class WallpaperService extends AbstractManager
                ->setChangefreq($row['changefreq'])
                ->setPriority($row['priority'])
                ->setPurpose($row['purpose'])
+               ->setPurposeName((new PurposeCollection)->findByKey($entity->getPurpose()))
                ->setFormat($row['format'])
-               ->setPattern($row['pattern']);
+               ->setFormatName((new FormatCollection)->findByKey($entity->getFormat()))
+               ->setPattern($row['pattern'])
+               ->setPatternName((new PatternCollection)->findByKey($entity->getPattern()));
 
         return $entity;
     }
