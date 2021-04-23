@@ -135,6 +135,7 @@ use Cms\View\Icon;
                     'columns' => [
                         [
                             'column' => 'filename',
+                            'label' => 'Image',
                             'value' => function($image){
                                 return Element::image($image->getFilename(), ['class' => 'img-fluid w-50']);
                             },
