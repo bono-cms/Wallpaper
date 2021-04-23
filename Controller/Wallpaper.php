@@ -33,7 +33,8 @@ final class Wallpaper extends AbstractController
 
         if ($wallpaper) {
             $wallpaper->setGallery($this->getModuleService('galleryService')->fetchAll($id))
-                      ->setInteriors($this->getModuleService('interiorService')->fetchAll($id));
+                      ->setInteriors($this->getModuleService('interiorService')->fetchAll($id))
+                      ->setCompanions($wallpaperService->fetchCompanionsById($id));
 
             $this->loadSitePlugins();
 
