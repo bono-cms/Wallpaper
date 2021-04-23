@@ -11,8 +11,12 @@
 
 namespace Wallpaper\Controller;
 
-use Site\Controller\AbstractController;
 use Krystal\Stdlib\VirtualEntity;
+use Site\Controller\AbstractController;
+use Wallpaper\Collection\PatternCollection;
+use Wallpaper\Collection\FormatCollection;
+use Wallpaper\Collection\PurposeCollection;
+use Wallpaper\Collection\ColorCollection;
 
 final class Wallpaper extends AbstractController
 {
@@ -71,6 +75,13 @@ final class Wallpaper extends AbstractController
              ->setTitle($this->translator->translate('Wallpaper catalog'));
 
         return $this->view->render('wallpaper-catalog', [
+            'filter' => [
+                'active' => $filter,
+                'colors' => (new ColorCollection)->getAll(),
+                'purposes' => (new PurposeCollection)->getAll(),
+                'formats' => (new FormatCollection)->getAll(),
+                'patterns' => (new PatternCollection)->getAll()
+            ],
             'languages' => $this->getService('Cms', 'languageManager')->fetchAll(true),
             'page' => $page,
             'wallpapers' => $wallpapers,
