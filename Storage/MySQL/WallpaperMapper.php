@@ -40,11 +40,13 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     /**
      * Returns a set of shared columns to be used in SELECT query
      * 
+     * @param boolean $withGalleryRelation
      * @return array
      */
-    private function getColumns()
+    private function getColumns($withGalleryRelation = false)
     {
-        return [
+        // Columns to be selected
+        $columns = [
             self::column('id'),
             self::column('sku'),
             self::column('interior_id'),
@@ -54,7 +56,6 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
             self::column('format'),
             self::column('group'),
             WallpaperInteriorMapper::column('filename') => 'interior',
-            WallpaperGalleryMapper::column('filename') => 'image',
 
             // Translations
             WallpaperTranslationMapper::column('lang_id'),
@@ -70,6 +71,12 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
             WebPageMapper::column('changefreq'),
             WebPageMapper::column('priority')
         ];
+
+        if ($withGalleryRelation) {
+            $columns[WallpaperGalleryMapper::column('filename')] = 'image';
+        }
+
+        return $columns;
     }
 
     /**
@@ -109,17 +116,21 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     /**
      * Create shared select instance
      * 
+     * @param boolean $withGalleryRelation
      * @return \Krystal\Db\Sql\Db
      */
-    private function createSharedSelect()
+    private function createSharedSelect($withGalleryRelation = false)
     {
-        $db = $this->createWebPageSelect($this->getColumns())
+        $db = $this->createWebPageSelect($this->getColumns($withGalleryRelation))
                    ->leftJoin(WallpaperInteriorMapper::getTableName(), [
                         WallpaperInteriorMapper::column('id') => self::getRawColumn('interior_id')
-                   ])
-                   ->leftJoin(WallpaperGalleryMapper::getTableName(), [
-                        WallpaperGalleryMapper::column('id') => self::getRawColumn('image_id')
                    ]);
+        
+        if ($withGalleryRelation == true){
+           $db->leftJoin(WallpaperGalleryMapper::getTableName(), [
+                WallpaperGalleryMapper::column('wallpaper_id') => self::getRawColumn('id')
+           ]);
+        }
 
         return $db;
     }
@@ -157,7 +168,7 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
      */
     public function fetchById($id, $withTranslations)
     {
-        $db = $this->createSharedSelect()
+        $db = $this->createSharedSelect(true)
                    ->whereEquals(self::column('id'), $id);
 
         if ($withTranslations === true) {
@@ -208,11 +219,14 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
      */
     public function fetchAll($page = null, $limit = null, array $filter = [], $sort = false)
     {
-        $db = $this->createSharedSelect()
+        // Whether color filter is active
+        $hasColor = isset($filter['colors']) && (new ColorCollection)->hasKeys($filter['colors']);
+
+        $db = $this->createSharedSelect($hasColor)
                    ->whereEquals(WallpaperTranslationMapper::column('lang_id'), $this->getLangId());
 
         // Color filter
-        if (isset($filter['colors']) && (new ColorCollection)->hasKeys($filter['colors'])) {
+        if ($hasColor) {
             $db->andWhereIn(WallpaperGalleryMapper::column('color'), $filter['colors']);
         }
 
@@ -252,6 +266,7 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
             $db->paginate($page, $limit);
         }
 
+        //d($filter['colors']);
         return $db->queryAll();
     }
 }
