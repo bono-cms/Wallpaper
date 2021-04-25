@@ -69,7 +69,7 @@ final class WallpaperService extends AbstractManager
                ->setWebPageId($row['web_page_id'])
                ->setInteriorId($row['interior_id'])
                ->setImageId($row['image_id'])
-               ->setImage($row['image'])
+               ->setImage(isset($row['image']) ? $row['image'] : null)
                ->setInterior($row['interior'])
                ->setSku($row['sku'])
                ->setName($row['name'])
@@ -197,7 +197,7 @@ final class WallpaperService extends AbstractManager
         $rows = $this->wallpaperMapper->fetchList($id);
 
         foreach ($rows as $row) {
-            $output['id'] = sprintf('%s / %s', $row['name'], $row['sku']);
+            $output[$row['id']] = sprintf('%s / %s', $row['name'], $row['sku']);
         }
 
         return $output;
