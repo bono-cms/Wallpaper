@@ -75,6 +75,7 @@ use Cms\View\Icon;
             <?= $this->field('Purpose')->select('wallpaper[purpose]', $collection['purposes'], $entity->getPurpose(), ['class' => 'form-control'], ''); ?>
             <?= $this->field('Format')->select('wallpaper[format]', $collection['formats'], $entity->getFormat(), ['class' => 'form-control'], ''); ?>
             <?= $this->field('Pattern')->select('wallpaper[pattern]', $collection['patterns'], $entity->getPattern(), ['class' => 'form-control'], ''); ?>
+            <?= $this->field('Group')->select('wallpaper[group]', $collection['groups'], $entity->getGroup(), ['class' => 'form-control'], ''); ?>
         </div>
 
         <?php if (!$isNew): ?>

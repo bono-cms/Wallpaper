@@ -16,6 +16,7 @@ use Krystal\Stdlib\VirtualEntity;
 use Wallpaper\Collection\PatternCollection;
 use Wallpaper\Collection\FormatCollection;
 use Wallpaper\Collection\PurposeCollection;
+use Wallpaper\Collection\GroupCollection;
 
 final class Wallpaper extends AbstractController
 {
@@ -62,7 +63,8 @@ final class Wallpaper extends AbstractController
             'collection' => [
                 'patterns' => $this->translator->translateArray((new PatternCollection)->getAll()),
                 'formats' => $this->translator->translateArray((new FormatCollection)->getAll()),
-                'purposes' => $this->translator->translateArray((new PurposeCollection)->getAll())
+                'purposes' => $this->translator->translateArray((new PurposeCollection)->getAll()),
+                'groups' => $this->translator->translateArray((new GroupCollection)->getAll())
             ]
         ]);
     }
