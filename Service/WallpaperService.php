@@ -19,6 +19,7 @@ use Wallpaper\Storage\WallpaperMapperInterface;
 use Wallpaper\Collection\PatternCollection;
 use Wallpaper\Collection\FormatCollection;
 use Wallpaper\Collection\PurposeCollection;
+use Wallpaper\Collection\GroupCollection;
 
 final class WallpaperService extends AbstractManager
 {
@@ -85,7 +86,9 @@ final class WallpaperService extends AbstractManager
                ->setFormat($row['format'])
                ->setFormatName((new FormatCollection)->findByKey($entity->getFormat()))
                ->setPattern($row['pattern'])
-               ->setPatternName((new PatternCollection)->findByKey($entity->getPattern()));
+               ->setPatternName((new PatternCollection)->findByKey($entity->getPattern()))
+               ->setGroup($row['group'])
+               ->setGroupName((new GroupCollection)->findByKey($entity->getGroup()));
 
         return $entity;
     }

@@ -52,6 +52,7 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
             self::column('purpose'),
             self::column('pattern'),
             self::column('format'),
+            self::column('group'),
             WallpaperInteriorMapper::column('filename') => 'interior',
             WallpaperGalleryMapper::column('filename') => 'image',
 
