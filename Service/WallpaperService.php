@@ -15,6 +15,7 @@ use Cms\Service\WebPageManagerInterface;
 use Cms\Service\AbstractManager;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Text\TextUtils;
 use Wallpaper\Storage\WallpaperMapperInterface;
 use Wallpaper\Collection\PatternCollection;
 use Wallpaper\Collection\FormatCollection;
@@ -88,7 +89,8 @@ final class WallpaperService extends AbstractManager
                ->setPattern($row['pattern'])
                ->setPatternName((new PatternCollection)->findByKey($entity->getPattern()))
                ->setGroup($row['group'])
-               ->setGroupName((new GroupCollection)->findByKey($entity->getGroup()));
+               ->setGroupName((new GroupCollection)->findByKey($entity->getGroup()))
+               ->setDownloadName(sprintf('%s-%s', strtolower(TextUtils::romanize($entity->getName())), $entity->getSku()));
 
         return $entity;
     }
