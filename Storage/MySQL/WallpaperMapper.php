@@ -199,6 +199,20 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     }
 
     /**
+     * Fetch by group constant
+     * 
+     * @param int $group Group constant
+     * @param int $limit
+     * @return array
+     */
+    public function fetchByGroup($group, $limit = 6)
+    {
+        return $this->fetchAll(null, $limit, [
+            'groups' => [$group]
+        ]);
+    }
+
+    /**
      * Fetch all wallpapers
      * 
      * @param int $page Current page

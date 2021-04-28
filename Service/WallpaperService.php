@@ -220,6 +220,18 @@ final class WallpaperService extends AbstractManager
     }
 
     /**
+     * Fetch by group constant
+     * 
+     * @param int $group Group constant
+     * @param int $limit
+     * @return array
+     */
+    public function fetchByGroup($group, $limit = 6)
+    {
+        return $this->prepareResults($this->wallpaperMapper->fetchByGroup($group, $limit));
+    }
+
+    /**
      * Saves a wallpaper
      * 
      * @param array $input Raw input data
