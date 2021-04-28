@@ -255,6 +255,16 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
             $db->andWhereIn(self::column('format'), $filter['formats']);
         }
 
+        // SKU filter
+        if (isset($filter['sku'])) {
+            $db->rawAnd()
+               ->openBracket()
+               ->in(self::column('sku'), $filter['sku'])
+               ->rawOr()
+               ->in(WallpaperGalleryMapper::column('sku'), $filter['sku'])
+               ->closeBracket();
+        }
+
         switch ($sort) {
             case false:
                 $db->orderBy(self::column('id'))
