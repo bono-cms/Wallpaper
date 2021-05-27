@@ -70,6 +70,17 @@ final class GalleryService extends AbstractManager
     }
 
     /**
+     * Deletes an image by its id
+     * 
+     * @param int $id
+     * @return boolean
+     */
+    public function deleteById($id)
+    {
+        return $this->wallpaperGalleryMapper->deleteByPk($id);
+    }
+
+    /**
      * Fetches an image by its id
      * 
      * @param int $id
