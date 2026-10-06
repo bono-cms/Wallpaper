@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -82,7 +80,7 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     /**
      * Clear attached companions by primary id
      * 
-     * @param int $id Walloper id
+     * @param int $id Wallpaper id
      * @return boolean
      */
     public function clearCompanions($id)
@@ -93,7 +91,7 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     /**
      * Save companions
      * 
-     * @param int $id Walloper id
+     * @param int $id Wallpaper id
      * @param array $slaves Companion ids
      * @return boolean
      */
@@ -105,7 +103,7 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
     /**
      * Fetch companion ids
      * 
-     * @param int $id Walloper id
+     * @param int $id Wallpaper id
      * @return array
      */
     public function fetchCompanionIds($id)
@@ -272,7 +270,7 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
             break;
 
             case 'sku':
-                $db->orderBy(self::column('sky'));
+                $db->orderBy(self::column('sku'));
             break;
         }
 
@@ -286,7 +284,6 @@ final class WallpaperMapper extends AbstractMapper implements WallpaperMapperInt
             $db->paginate($page, $limit);
         }
 
-        //d($filter['colors']);
         return $db->queryAll();
     }
 }

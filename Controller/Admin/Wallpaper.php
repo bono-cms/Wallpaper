@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -108,7 +106,10 @@ final class Wallpaper extends AbstractController
         $this->getModuleService('wallpaperService')->deleteById($id);
 
         $this->flashBag->set('success', 'A wallpaper has been deleted successfully');
-        return 1;
+
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -118,18 +119,52 @@ final class Wallpaper extends AbstractController
      */
     public function saveAction()
     {
-        // Get raw input data
-        $input = $this->request->getPost();
+        $validator = $this->createValidation();
 
-        $wallpaperService = $this->getModuleService('wallpaperService');
-        $wallpaperService->save($input);
+        $validator->field('wallpaper.sku')
+                  ->required();
 
-        if ($input['wallpaper']['id']) {
-            $this->flashBag->set('success', 'Wallpaper has been updated successfully');
-            return 1;
+        $validator->field('wallpaper.purpose')
+                  ->required();
+
+        $validator->field('wallpaper.format')
+                  ->required();
+
+        $validator->field('wallpaper.pattern')
+                  ->required();
+
+        $validator->field('wallpaper.group')
+                  ->required();
+
+        $validator->field('translation.*.name')
+                  ->required()
+                  ->addRule('minlength', null, ['min' => 2]);
+
+        if ($validator->isPassed()) {
+            // Get raw input data
+            $input = $this->request->getPost();
+
+            $wallpaperService = $this->getModuleService('wallpaperService');
+            $wallpaperService->save($input);
+
+            if ($input['wallpaper']['id']) {
+                $this->flashBag->set('success', 'Wallpaper has been updated successfully');
+
+                return $this->json([
+                    'refresh' => true
+                ]);
+            } else {
+                $this->flashBag->set('success', 'Wallpaper has been added successfully');
+
+                return $this->json([
+                    'redirect' => $this->createUrl('Wallpaper:Admin:Wallpaper@editAction', [$wallpaperService->getLastId()]),
+                ]);
+            }
+
         } else {
-            $this->flashBag->set('success', 'Wallpaper has been added successfully');
-            return $wallpaperService->getLastId();
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
         }
     }
 }

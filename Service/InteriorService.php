@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -46,7 +44,7 @@ final class InteriorService extends AbstractManager
                ->setOrder($row['order'])
                ->setFilename($row['filename']);
 
-        if (isset($row['wallpaper'])){
+        if (isset($row['wallpaper'])) {
             $entity->setWallpaper($row['wallpaper']);
         }
 

@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -18,7 +16,7 @@ use Krystal\Stdlib\VirtualEntity;
 final class Gallery extends AbstractController
 {
     /**
-     * Adds an interior
+     * Adds a gallery image
      * 
      * @param int $wallpaperId
      * @return string
@@ -58,7 +56,7 @@ final class Gallery extends AbstractController
     /**
      * Creates a shared form
      * 
-     * @param \Krystal\Stdlib\VirtualEntity $interior
+     * @param \Krystal\Stdlib\VirtualEntity $image
      * @return string
      */
     private function createForm(VirtualEntity $image)
@@ -87,28 +85,55 @@ final class Gallery extends AbstractController
         $this->getModuleService('galleryService')->deleteById($id);
 
         $this->flashBag->set('success', 'Gallery image has been deleted successfully');
-        return 1;
+
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
-     * Saves an interior
+     * Saves a gallery image
      * 
      * @return string
      */
     public function saveAction()
     {
-        // Get raw post data
-        $input = $this->request->getAll();
+        $validator = $this->createValidation();
 
-        $interiorService = $this->getModuleService('galleryService');
-        $interiorService->save($input);
+        $validator->field('image.order')
+                  ->addRule('numeric');
 
-        if ($input['data']['image']['id']) {
-            $this->flashBag->set('success', 'Gallery image has been updated successfully');
-            return 1;
+        $validator->field('image.color')
+                  ->required();
+
+        $validator->field('image.sku')
+                  ->required();
+
+        if ($validator->isPassed()) {
+            // Get raw post data
+            $input = $this->request->getAll();
+
+            $interiorService = $this->getModuleService('galleryService');
+            $interiorService->save($input);
+
+            if ($input['data']['image']['id']) {
+                $this->flashBag->set('success', 'Gallery image has been updated successfully');
+
+                return $this->json([
+                    'refresh' => true
+                ]);
+            } else {
+                $this->flashBag->set('success', 'Gallery image has been added successfully');
+
+                return $this->json([
+                    'redirect' => $this->createUrl('Wallpaper:Admin:Gallery@editAction', [$interiorService->getLastId()]),
+                ]);
+            }
+
         } else {
-            $this->flashBag->set('success', 'Gallery image has been added successfully');
-            return $interiorService->getLastId();
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
         }
     }
 }

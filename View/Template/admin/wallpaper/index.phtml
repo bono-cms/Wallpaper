@@ -4,6 +4,8 @@ use Krystal\Form\Element;
 use Krystal\Widget\GridView\GridViewWidget;
 use Cms\View\Icon;
 
+defined('KRYSTAL') or die;
+
 ?>
 
 <form autocomplete="off">
@@ -80,9 +82,7 @@ use Cms\View\Icon;
             <br />
 
             <?php if (empty($wallpapers)): ?>
-            <div class="center-block">
-                <h2 class="text-center text-muted"> <?php $this->show('No wallpapers'); ?></h2>
-            </div>
+            <h2 class="text-center text-muted"><?= $this->translate('No wallpapers'); ?></h2>
             <?php endif; ?>
         </div>
 

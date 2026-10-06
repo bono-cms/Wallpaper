@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -140,7 +138,7 @@ final class WallpaperService extends AbstractManager
     /**
      * Save companions
      * 
-     * @param int $id Walloper id
+     * @param int $id Wallpaper id
      * @param array $slaves Companion ids
      * @return boolean
      */
@@ -152,7 +150,7 @@ final class WallpaperService extends AbstractManager
     /**
      * Fetch companion ids
      * 
-     * @param int $id Walloper id
+     * @param int $id Wallpaper id
      * @return array
      */
     public function fetchCompanionIds($id)

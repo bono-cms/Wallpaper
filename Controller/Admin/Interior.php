@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -62,7 +60,7 @@ final class Interior extends AbstractController
      */
     private function createForm(VirtualEntity $interior)
     {
-        $title = !$interior->getId() ? 'Upload new new interior image' : 'Update interior image';
+        $title = !$interior->getId() ? 'Upload new interior image' : 'Update interior image';
 
         // Append breadcrumbs
         $this->view->getBreadcrumbBag()->addOne('Wallpapers', 'Wallpaper:Admin:Wallpaper@indexAction')
@@ -85,7 +83,10 @@ final class Interior extends AbstractController
         $this->getModuleService('interiorService')->deleteById($id);
 
         $this->flashBag->set('success', 'Interior has been deleted successfully');
-        return 1;
+
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -95,18 +96,36 @@ final class Interior extends AbstractController
      */
     public function saveAction()
     {
-        // Get raw post data
-        $input = $this->request->getAll();
+        $validator = $this->createValidation();
 
-        $interiorService = $this->getModuleService('interiorService');
-        $interiorService->save($input);
+        $validator->field('interior.order')
+                  ->addRule('numeric');
 
-        if ($input['data']['interior']['id']) {
-            $this->flashBag->set('success', 'An interior has been updated successfully');
-            return 1;
+        if ($validator->isPassed()) {
+            // Get raw post data
+            $input = $this->request->getAll();
+
+            $interiorService = $this->getModuleService('interiorService');
+            $interiorService->save($input);
+
+            if ($input['data']['interior']['id']) {
+                $this->flashBag->set('success', 'An interior has been updated successfully');
+
+                return $this->json([
+                    'refresh' => true
+                ]);
+            } else {
+                $this->flashBag->set('success', 'An interior has been added successfully');
+
+                return $this->json([
+                    'redirect' => $this->createUrl('Wallpaper:Admin:Interior@editAction', [$interiorService->getLastId()]),
+                ]);
+            }
+
         } else {
-            $this->flashBag->set('success', 'An interior has been added successfully');
-            return $interiorService->getLastId();
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
         }
     }
 }

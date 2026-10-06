@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -47,7 +45,7 @@ final class WallpaperInteriorMapper extends AbstractMapper implements WallpaperI
                        ->leftJoin(WallpaperMapper::getTableName(), [
                             WallpaperMapper::column('id') => self::getRawColumn('wallpaper_id')
                        ])
-                       // Wallpaper relation
+                       // Wallpaper translation relation
                        ->leftJoin(WallpaperTranslationMapper::getTableName(), [
                             WallpaperTranslationMapper::column('id') => WallpaperMapper::getRawColumn('id'),
                             WallpaperTranslationMapper::column('lang_id') => $this->getLangId()
