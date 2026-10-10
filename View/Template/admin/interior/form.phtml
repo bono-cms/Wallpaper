@@ -2,35 +2,31 @@
 
 use Krystal\Form\Element;
 
-defined('KRYSTAL') or die;
-
 ?>
 
-<form class="card" data-group="interior" autocomplete="off">
+<form class="card" autocomplete="off">
     <?= Element::hidden('interior[id]', $interior->getId()); ?>
     <?= Element::hidden('interior[wallpaper_id]', $interior->getWallpaperId()); ?>
 
-    <div class="form-group row">
+    <div class="mb-3 row">
         <label class="col-lg-2 col-form-label"><?= $this->translate('Order'); ?></label>
         <div class="col-lg-10">
             <div class="input-group">
                 <?= Element::text('interior[order]', $interior->getOrder(), ['class' => 'form-control']); ?>
-                <div class="input-group-append">
-                    <span class="input-group-text"><i class="bi bi-pencil"></i></span>
-                </div>
+                <span class="input-group-text"><i class="bi bi-pencil"></i></span>
             </div>
         </div>
     </div>
 
     <?php if ($interior->getFilename()): ?>
-    <div class="form-group row">
+    <div class="mb-3 row">
         <div class="col-lg-10 offset-lg-2">
             <img class="img-fluid" src="<?= $interior->getFilename(); ?>" />
         </div>
     </div>
     <?php endif; ?>
 
-    <div class="form-group row">
+    <div class="mb-3 row">
         <label class="col-lg-2 col-form-label"><?= $this->translate('Image file'); ?></label>
         <div class="col-lg-10">
             <?= Element::file('file', 'image/jpeg', ['class' => 'form-control']); ?>

@@ -5,24 +5,22 @@ use Krystal\Widget\GridView\GridViewWidget;
 use Cms\Service\LanguageManager;
 use Cms\View\Icon;
 
-defined('KRYSTAL') or die;
-
 ?>
 
-<form class="card" data-group="wallpaper" autocomplete="off">
+<form class="card" autocomplete="off">
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" href="#wallpaper-active" data-toggle="tab"><i class="fas fa-scroll"></i> <?= $this->translate('Wallpaper'); ?></a>
+            <a class="nav-link active" href="#wallpaper-active" data-bs-toggle="tab"><i class="fas fa-scroll"></i> <?= $this->translate('Wallpaper'); ?></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#wallpaper-configuration" data-toggle="tab"><i class="fas fa-dice"></i> <?= $this->translate('Configuration'); ?></a>
+            <a class="nav-link" href="#wallpaper-configuration" data-bs-toggle="tab"><i class="fas fa-dice"></i> <?= $this->translate('Configuration'); ?></a>
         </li>
         <?php if (!$isNew): ?>
         <li class="nav-item">
-            <a class="nav-link" href="#wall-interior" data-toggle="tab"><i class="fas fa-camera-retro"></i> <?= $this->translate('Interior'); ?> <small class="text-muted">(<?= count($interiors); ?>)</small></a>
+            <a class="nav-link" href="#wall-interior" data-bs-toggle="tab"><i class="fas fa-camera-retro"></i> <?= $this->translate('Interior'); ?> <small class="text-muted">(<?= count($interiors); ?>)</small></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#wall-gallery" data-toggle="tab"><i class="fas fa-image"></i> <?= $this->translate('Gallery'); ?> <small class="text-muted">(<?= count($images); ?>)</small></a>
+            <a class="nav-link" href="#wall-gallery" data-bs-toggle="tab"><i class="fas fa-image"></i> <?= $this->translate('Gallery'); ?> <small class="text-muted">(<?= count($images); ?>)</small></a>
         </li>
         <?php endif; ?>
 	</ul>
@@ -41,19 +39,17 @@ defined('KRYSTAL') or die;
                     <?= Element::hidden(sprintf('translation[%s][lang_id]', $language->getId()), $language->getId()); ?>
                     <?= Element::hidden(sprintf('translation[%s][web_page_id]', $language->getId()), $entity->getWebPageId()); ?>
 
-                    <div class="form-group row">
+                    <div class="mb-3 row">
                         <label class="col-lg-2 col-form-label"><?= $this->translate('Name'); ?></label>
                         <div class="col-lg-10">
                             <div class="input-group">
                                 <?= Element::text(sprintf('translation[%s][name]', $language->getId()), $entity->getName(), ['class' => 'form-control']); ?>
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="bi bi-pencil"></i></span>
-                                </div>
+                                <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="mb-3 row">
                         <label class="col-lg-2 col-form-label"><?= $this->translate('Description'); ?></label>
                         <div class="col-lg-10">
                             <?= Element::textarea(sprintf('translation[%s][description]', $language->getId()), $entity->getDescription(), ['class' => 'form-control']); ?>
@@ -61,53 +57,49 @@ defined('KRYSTAL') or die;
                     </div>
 
                     <div class="options">
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             <label class="col-lg-2 col-form-label"><?= $this->translate('Slug'); ?></label>
                             <div class="col-lg-10">
                                 <div class="input-group">
                                     <?= Element::text(sprintf('translation[%s][slug]', $language->getId()), $entity->getSlug(), ['class' => 'form-control', 'placeholder' => $this->translate('URL slug for this wallpaper. By default is taken from the name')]); ?>
 
-                                    <div class="input-group-append">
-                                        <a class="input-group-text" href="#" data-slug-selector="<?= LanguageManager::generateSelector($language->getId()); ?>"><i class="bi bi-arrow-clockwise" data-toggle="tooltip" title="<?= $this->translate('Refresh'); ?>"></i></a>
-                                    </div>
+                                    <a class="input-group-text" href="#" data-slug-selector="<?= LanguageManager::generateSelector($language->getId()); ?>"><i class="bi bi-arrow-clockwise" data-bs-toggle="tooltip" title="<?= $this->translate('Refresh'); ?>"></i></a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             <label class="col-lg-2 col-form-label"><?= $this->translate('Change frequency'); ?></label>
                             <div class="col-lg-10">
                                 <?= Element::select(sprintf('translation[%s][changefreq]', $language->getId()), $this->translateArray($changeFreqs), $entity->getChangeFreq(), ['class' => 'form-control']); ?>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             <label class="col-lg-2 col-form-label"><?= $this->translate('Priority'); ?></label>
                             <div class="col-lg-10">
                                 <?= Element::select(sprintf('translation[%s][priority]', $language->getId()), $priorities, $entity->getPriority(), ['class' => 'form-control']); ?>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             <label class="col-lg-2 col-form-label"><?= $this->translate('Title'); ?></label>
                             <div class="col-lg-10">
                                 <div class="input-group">
                                     <?= Element::text(sprintf('translation[%s][title]', $language->getId()), $entity->getTitle(), ['class' => 'form-control', 'data-input' => 'title', 'placeholder' => $this->translate('Wallpaper title')]); ?>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
-                                    </div>
+                                    <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             <label class="col-lg-2 col-form-label"><?= $this->translate('Keywords'); ?></label>
                             <div class="col-lg-10">
                                 <?= Element::text(sprintf('translation[%s][keywords]', $language->getId()), $entity->getKeywords(), ['class' => 'form-control', 'placeholder' => $this->translate('Keywords used for search engines')]); ?>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             <label class="col-lg-2 col-form-label"><?= $this->translate('Description'); ?></label>
                             <div class="col-lg-10">
                                 <?= Element::textarea(sprintf('translation[%s][meta_description]', $language->getId()), $entity->getMetaDescription(), ['class' => 'form-control', 'placeholder' => $this->translate('Meta description for search engines')]); ?>
@@ -122,47 +114,45 @@ defined('KRYSTAL') or die;
         <div class="tab-pane fade" id="wallpaper-configuration">
             <?= Element::hidden('wallpaper[id]', $entity->getId()); ?>
 
-            <div class="form-group row">
+            <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label"><?= $this->translate('SKU'); ?></label>
                 <div class="col-lg-10">
                     <div class="input-group">
                         <?= Element::text('wallpaper[sku]', $entity->getSku(), ['class' => 'form-control']); ?>
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="bi bi-pencil"></i></span>
-                        </div>
+                        <span class="input-group-text"><i class="bi bi-pencil"></i></span>
                     </div>
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label"><?= $this->translate('Companions'); ?></label>
                 <div class="col-lg-10">
                     <?= Element::select('companions[]', $companions, $companionIds, ['class' => 'form-control', 'multiple' => true]); ?>
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label"><?= $this->translate('Purpose'); ?></label>
                 <div class="col-lg-10">
                     <?= Element::select('wallpaper[purpose]', $collection['purposes'], $entity->getPurpose(), ['class' => 'form-control'], ''); ?>
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label"><?= $this->translate('Format'); ?></label>
                 <div class="col-lg-10">
                     <?= Element::select('wallpaper[format]', $collection['formats'], $entity->getFormat(), ['class' => 'form-control'], ''); ?>
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label"><?= $this->translate('Pattern'); ?></label>
                 <div class="col-lg-10">
                     <?= Element::select('wallpaper[pattern]', $collection['patterns'], $entity->getPattern(), ['class' => 'form-control'], ''); ?>
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label"><?= $this->translate('Group'); ?></label>
                 <div class="col-lg-10">
                     <?= Element::select('wallpaper[group]', $collection['groups'], $entity->getGroup(), ['class' => 'form-control'], ''); ?>
